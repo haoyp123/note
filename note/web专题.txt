@@ -1,0 +1,53 @@
+DNS解析
+	url：统一资源占位符
+	通过域名解析ip地址。
+	先解析本地的host文件，若有则直接映射为ip地址，
+	若没有则通过宽带运营商的DNS进行解析，转为ip地址。
+
+常识
+	WEB-INFO 目录资源不能直接访问
+	静态资源：源代码不会被改变。
+	动态资源：源代码会改变。
+
+	
+servlet
+	动态资源开发技术
+	注解方式：@webServlet（"/hello"）
+	
+	生命周期
+		init--》只会执行一次
+		service 请求发送
+		destroy--》只执行一次
+	load-on-startup 启动时加载tomcat
+	servlet 是单例多线程的
+		无参构造函数只执行一次
+	servlet 上下文
+	
+session和cookie
+	cookie  服务器和客户端之间的资源保存再客户端
+		setCookie 就是 服务器端响应给客户端，客户端获取响应头里的cookie信息，客户端保存再本地
+		cookie 默认浏览器关闭失效。
+		localhost 和127.0.1是不一样的，存储cookie
+		cookie 只能保存字符串，不能保存对象，最多4k
+		
+		
+	session 保存再服务端，存放再内存中，客户端与服务端之间的通信使用sessionid()
+		客户端通过请求头的方式将cookie传递给服务器端，服务器端通过请求获取cookie
+		token+session 解决表单重复提交的问题。
+		
+		
+http协议
+ 客户端和服务端进行传输的超文本协议，是一种基于socket通信的无状态协议。
+ http协议的本质是请求和相应。
+ tcp通信 三次握手基于流传输二进制。
+ 
+ http协议格式分类
+	请求 request
+		防盗用：获取请求头中Referer 是否是本地的
+	响应 response
+	请求中的时间戳 t=.. 防止缓存
+	http状态304 是从本地读取的，不是从服务器读取的
+	http状态302 重定向 是两次请求。客户端收到状态为302的时候，通过location 跳转到新的页面。
+	重定向发起了两次请求。
+	
+ 
