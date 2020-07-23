@@ -1,0 +1,22 @@
+mybatis 
+
+mybatis和hibernate的区别
+	
+	
+原理
+	dom解析xml
+	创建bean交有spring管理
+	读取配置文件
+	
+sql注入
+	#{}和${}的区别
+	什么是sql注入
+	select * from user where user_id= '123';
+	select * from user where user_id=''or 1=1;
+	通过拼接1=1恒等查询。
+解决sql注入的方式
+在传统jdbc中，
+使用？ 先编译，在传参，将单引号转义。
+
+在mybatis中，${} 表示自己拼接sql，这样会形成sql注入
+#{}会进行预编译，可以防止sql注入
