@@ -1,0 +1,144 @@
+数据交换格式
+	xml：重量级，占宽带比较高，传输效率并不快。一般是在webservice中，或者比较老的项目。
+	json：轻量级，占宽带比较小，传输相对快。现在互联网项目一般是http协议+json进行传输。
+
+反射
+
+spring Ioc的执行原理(ClassPathXmlApplicationContextW为例)
+	1.通过构造函数加载xml地址信息--configLocations。
+	
+	2.在构造函数中调用refresh()方法。方法中的代码用了synchronized修饰，保证了线程安全。
+	
+	3.refresh初始化bean方法主要步骤
+		1）prepareRefresh-- bean的刷新前准备
+			校验配置文件 初始化监听器
+		2）ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();这里将会初始化 BeanFactory、加载 Bean、注册 Bean 等等。
+		    refreshBeanFactory()-->如果有旧的容器旧销毁，创建新的容器。
+			getBeanFactory()-->返回bean的定义信息
+			
+			refreshBeanFactory()详解
+			if (hasBeanFactory()) {
+				destroyBeans();
+				closeBeanFactory();
+			}
+			DefaultListableBeanFactory beanFactory = createBeanFactory();
+			实例化一个DefaultListableBeanFactory
+			beanFactory.setSerializationId(getId());
+			实现bean的序列号
+			customizeBeanFactory(beanFactory);
+			设置两个bean的属性，是否允许被覆盖，是否允许循环引用
+				allowBeanDefinitionOverriding--是否允许bean定义被覆盖，如果同一文件中，定义了两个相同的bean会报错，不同文件会覆盖。
+				allowCircularReferences--是否允许循环引用			
+			loadBeanDefinitions(beanFactory);
+			加载bean信息到bean工厂
+				XmlBeanDefinitionReader 初始化一个reader 用于读取bean配置文件
+				通过loadBeanDefinitions()方法加载具体配置信息
+				核心方法：doLoadBeanDefinitions()
+					doLoadDocument()--将xml配置解析为document对象
+					int count = registerBeanDefinitions(doc, resource); 返回值是int，从当前文件中生成了多少新增的bean	
+				核心方法：doRegisterBeanDefinitions()
+					delegate.parseCustomElement(ele); 这两个分支了。
+					parseDefaultElement(ele, delegate) 代表解析的节点是 <import />、<alias />、<bean />、<beans /> 这几个。
+					processBeanDefinition(ele, delegate); 解析bean节点
+						BeanDefinitionHolder--》bean信息的封装类
+					
+				
+				
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			加载bean定义的信息--loadBeanDefinitions
+				BeanDefinitionReader--加载bean的定义信息。
+				doLoadBeanDefinitions--加载document对象，注册bean的定义信息。
+				
+		3）prepareBeanFactory
+				主要是设置bean后处理器和忽略依赖。
+		
+		4）invokeBeanFactoryPostProcessors
+		
+		
+		
+注解
+	注解有两种方式，一是元注解，二是自定义注解。
+	
+ORM 框架 对象关系映射
+	数据库表都是根据驼峰命名的。
+	
+	
+	
+	
+设计模式：
+	单例设计模式singleton
+		在一个jvm中保证只能有一个实例。
+		常用的基本两种，懒汉式和饿汉式
+		懒汉式线程不安全,饿汉式是线程安全的,类加载的时候就会初始化.
+		懒汉式:
+			在使用的时候才会初始化.
+			
+工厂设计模式：
+		
+代理设计模式：
+	控制一个对象的访问， 保证安全性。
+	代理类和被代理类实现共同的接口或者父类。
+	aop的核心就是代理设计模式
+	静态代理：需要自己实现代理类。
+	动态代理：
+		jdk动态代理：实现的是invocationHandler接口 jdk动态代理如果没有共同的接口，无法使用。
+		cglib动态代理：底层是asm框架 ，spring aop使用的就是cglib动态代理。
+		jdk动态代理是java内部的，底层是通过反射机制创建代理类。
+	
+	
+	
+spring 基础知识
+	什么是spring？
+	 spring就是java轻量级框架，把bean与bean的关系交由容器进行管理。
+	 di是做依赖注入，ioc是容器创建。
+	 ioc创建对象的方式
+		无参构造函数
+		有参构造函数
+		通过工厂创建
+	id简单介绍
+		--以userService和userDao为例
+		把bean实例化，交由容器管理，但是不注入，userService中直接使用userDao 会报错。
+		同时，注入的时候需要有set方法。通过set方法注入。
+	
+	
+	
+spring 事务
+	事务：保证数据一致性。acid特性
+	事务分类 
+		编程式 事务 手动 开启  
+			通过transactionManager 进行事务管理
+		声明式 事务 自动 开启
+			声明式事务只有抛出异常的时候才会回滚，try catch 时，在 catch中一定要回滚。
+			方法结束提交事务。
+	事务的传播行为
+		事务的传播行为是发生在多个事务之间。默认是required，
+		即当前有事务就用当前的事务。required_new 如果当前有事务，不用当前事务，会新建事务。
+		supports：
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
