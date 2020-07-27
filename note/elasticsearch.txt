@@ -12,3 +12,13 @@ elasticsearch
 		}
 		关系型数据库 一般是 库  表  行 列
 		es 是 索引 类型（类似表） 文档（一行数据） 字段（）
+
+环境搭建
+    es 安装需要安装jdk，es是java写的
+    docker 安装es参考的两个网站
+    https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+    https://www.elastic.co/guide/en/kibana/current/docker.html
+    安装以后，要用docker start elasticsearch
+    注意：es非常占用内存，内存默认1G。
+    9300是内部的一个端口号
+    9200是外部通讯的一个端口号
