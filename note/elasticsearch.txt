@@ -22,3 +22,7 @@ elasticsearch
     注意：es非常占用内存，内存默认1G。
     9300是内部的一个端口号
     9200是外部通讯的一个端口号
+
+基本操作
+    创建索引 PUT /indexName
+    获取索引 GET /indexName
