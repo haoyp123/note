@@ -24,5 +24,19 @@ elasticsearch
     9200是外部通讯的一个端口号
 
 基本操作
-    创建索引 PUT /indexName
+    创建文档之前需要创建索引
+    创建索引 PUT /indexName  PUT /test  支持小写的put get
     获取索引 GET /indexName
+
+    创建文档
+    put /索引/类型/id
+    创建文档 /索引/类型/id
+    put /test/user/1
+    {
+      "name":"张三",
+      "age":"18",
+      "sex":"男"
+    }
+    获取文档
+    get  /test/user/1
+
