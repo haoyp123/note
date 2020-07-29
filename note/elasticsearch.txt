@@ -31,6 +31,7 @@ elasticsearch
     创建文档
     put /索引/类型/id
     创建文档 /索引/类型/id
+    id相当于主键 不能重复
     put /test/user/1
     {
       "name":"张三",
@@ -53,5 +54,13 @@ elasticsearch
         "sex" : "男"
       }
     }
+    修改文档信息
+    put /test/user/1
+    {
+      "name":"李四",
+      "age":"18",
+      "sex":"男"
+    }
+    修改文档后 version会更新+1
 
 
