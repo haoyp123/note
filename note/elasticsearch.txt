@@ -68,3 +68,9 @@ es的版本控制
        悲观锁：假定会引起数据冲突，在修改数据前，先进行加锁。
        乐观锁：假定不会引起数据冲突，只有在提交的时候才检测，如果引起冲突交给用户解决。
        更新数据的同时也更新version。
+spring boot 整合 es
+    elasticsearch从7开始不推荐使用TransportClient客户端访问，所以yml配置使用spring.elasticsearch.rest.uris
+    spring:
+      elasticsearch:
+        rest:
+          uris: http://www.52diary.cn:9200
