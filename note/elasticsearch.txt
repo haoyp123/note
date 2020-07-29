@@ -39,4 +39,19 @@ elasticsearch
     }
     获取文档
     get  /test/user/1
+    {
+      "_index" : "test",
+      "_type" : "user",
+      "_id" : "1",
+      "_version" : 1,
+      "_seq_no" : 0,
+      "_primary_term" : 1,
+      "found" : true,
+      "_source" : {
+        "name" : "张三",
+        "age" : "18",
+        "sex" : "男"
+      }
+    }
+
 
