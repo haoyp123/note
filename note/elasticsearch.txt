@@ -74,3 +74,21 @@ spring boot 整合 es
       elasticsearch:
         rest:
           uris: http://www.52diary.cn:9200
+    通过springboot添加文档信息和操作jpa一样调用save方法
+        {
+          "_index" : "test",
+          "_type" : "user",
+          "_id" : "2",
+          "_version" : 1,
+          "_seq_no" : 2,
+          "_primary_term" : 1,
+          "found" : true,
+          "_source" : {
+            "_class" : "com.study.elasticsearch.esdemo.entity.UserEntity",
+            "id" : "2",
+            "name" : "jack",
+            "age" : 12,
+            "sex" : "女"
+          }
+        }
+        添加后的节点有个_class这个地址是文档的java bean
