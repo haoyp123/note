@@ -73,7 +73,7 @@ spring boot 整合 es
     spring:
       elasticsearch:
         rest:
-          uris: http://www.52diary.cn:9200
+          uris: xxx:9200
     通过springboot添加文档信息和操作jpa一样调用save方法
         {
           "_index" : "test",
