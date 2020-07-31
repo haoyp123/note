@@ -151,3 +151,12 @@ es 安装分词
     下载 ik smart
     解压到plugins 文件夹
     docker  cp  Linux 文件    容器:/usr/...  拷贝文件到虚拟机客户端
+    {
+      "analyzer":"ik_smart",
+      "text":"中国棒棒的,北京大学毕业生"
+
+    }
+    通过 analyzer指定使用的分词器
+
+es自定义分词器
+    自定义个 文档，写到ik配置即可。
