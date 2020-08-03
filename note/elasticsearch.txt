@@ -160,3 +160,11 @@ es 安装分词
 
 es自定义分词器
     自定义个 文档，写到ik配置即可。
+
+
+es映射
+    默认映射类型是 long
+    String 类型
+        test和keyword    test可以进行分词查询，keyword不可以进行分词查询。
+        get /test/_mapping 获取文档映射对象
+    通过设置type:"long" 设置类型
