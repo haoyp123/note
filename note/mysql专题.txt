@@ -1,0 +1,7 @@
+docker 安装mysql
+    2059 - authentication plugin 'caching_sha2_password'的解决方法。
+    这个是由于8以上版本得加密方式导致的。
+    show variables like 'default_authentication_plugin'; 查看加密方式
+    select host,user,plugin from mysql.user; 查看用户加密方式
+    ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+    把加密方式改为mysql_native_password 另外不仅要搞localhost的也要改%的
