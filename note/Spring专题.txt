@@ -132,10 +132,43 @@ spring 事务
 		即当前有事务就用当前的事务。required_new 如果当前有事务，不用当前事务，会新建事务。
 		supports：
 	
+
+spring 深入了解
+    核心特性
+    IOC
+    spring事件
+    资源管理
+    国际化
+    校验
+    数据绑定
+    类型转换
+    spring表达式
+    AOP
+
+
+    数据存储
+    JDBC
+    事务抽象
+    DAO支持
+    O/R映射
+    XML编列
+
 	
-	
-	
-	
+	webServlet
+	spring MVC
+    webSocket
+
+
+    技术整合
+    Remoting
+    JMS消息服务
+    JCA连接架构
+    JMX扩展管理
+
+    测试
+    模拟对象
+
+
 	
 	
 	
