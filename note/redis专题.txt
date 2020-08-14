@@ -9,3 +9,15 @@ redis的应用场景
     缓存
     session共享解决方案
     分布式事务锁
+
+redis 常用命令
+    操作字符串
+    set key value
+    get key
+    get keys
+
+    type key 查看key的类型
+
+    操作List集合
+    lpush key value1 value2 value3
+    lrange key start end
