@@ -21,3 +21,8 @@ redis 常用命令
     操作List集合
     lpush key value1 value2 value3
     lrange key start end
+
+    操作hset
+
+redis 单线程
+    redis在执行命令的时候是单线程
