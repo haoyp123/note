@@ -85,5 +85,7 @@ redis 数据一致性问题
 
     更新数据库，数据库会写日志binlog日志，提取binlog日志记录的更新信息，删除缓存，删除失败，将信息写入队列，
     继续删除。
+    参考：https://www.cnblogs.com/kexinxin/p/11745669.html
 
-
+redis分布式锁
+    //todo
