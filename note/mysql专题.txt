@@ -5,3 +5,29 @@ docker 安装mysql
     select host,user,plugin from mysql.user; 查看用户加密方式
     ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
     把加密方式改为mysql_native_password 另外不仅要搞localhost的也要改%的
+
+mysql 架构和内部模块
+    client连接server server 用线程池进行处理的。
+    8.0开始 mysql没有内置缓存了。
+
+    一个select的执行流程
+        连接到server
+        查询缓存（8.0已经没有了）
+        解析器---功能
+        词法分析 把sql拆分成单词，查看每个单词代表什么
+        语法分析
+        根据sql语法规则，判断你的sql是否正确。
+        预处理器--功能
+        select* from t1;
+        进行语义分析。对sql进行进一步解析，保证sql语义正确。若t1表不存在报错，是此时做处理的。
+        优化器--功能
+        词法分析语法分析和预处理都正确的时候，优化器会对sql进行优化，选取一个它认为最优的执行路径。
+        例如，多表关联查询先查询哪个表，如一个表有多个所引，具体使用哪个索引，另外对于一些恒等式1=1或者1<>1这种也会优化。
+        判断规则：基于开销的优化器，服务端的开销。选择开销最小的执行路径。
+        不是所有的sql都会进行优化，要注意sql写法。
+
+        执行计划--功能
+        把解析树进行执行。
+
+
+
