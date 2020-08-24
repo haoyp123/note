@@ -151,8 +151,20 @@ mysql的事务隔离级别
     如何保证读一致性？
         mysql用mvcc 多版本并发控制 multi version concurrency control
         mvcc原理--就是一个快照机制。
+        mvcc依赖两个隐藏列 DB_TRX_ID(事务ID) DB_ROLL_PRT(事务回滚指针 指向undo log链)
+        创建事务的时候会在当前事务添加事务ID
+        对于事务ID比当前事务大，或者在当前事务创建之前，没有提交的事务，是不能修改的。
+        更新的情况下，旧的数据放在undo log日志中事务回滚的版本是当前事务，新数据的创建版本是当前事务版本。
 
+        mvcc的理念是显示当前事务提交，或者本事务中的修改。
 
+        read view 有哪些事务存在但是没有commit的时候。（列表，当时事务活跃的id）
+        查询数据的时候在read view中的话，现在的版本是看不到的，根据 DB_ROLL_PRT 指针找到一个
+        undo log对应的旧的版本，直到不在read view中。
+
+    mvcc 的优势
+        读写不冲突效率高。
+        实现读一致性，不会感染别的数据。要读到最新的数据需要加锁。
 
 
 
