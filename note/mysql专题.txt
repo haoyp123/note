@@ -213,6 +213,11 @@ mysql 锁的问题
                 跨多个区间 最后临键区间 是最后一个key的下一个临键区间。
 
 
+mysql 优化
+    垂直分库:分为不同中心
+    读写分离 、分库分表  从连接角度优化。
 
-
-
+    sql语句的角度优化
+        找出慢查询sql
+        show VARIABLES like '%slow_query%'
+        show VARIABLES like '%long_query%'
