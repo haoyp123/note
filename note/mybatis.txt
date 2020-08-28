@@ -1,8 +1,7 @@
 mybatis 
 
 mybatis和hibernate的区别
-	
-	
+
 原理
 	dom解析xml
 	创建bean交有spring管理
@@ -20,3 +19,37 @@ sql注入
 
 在mybatis中，${} 表示自己拼接sql，这样会形成sql注入
 #{}会进行预编译，可以防止sql注入
+
+---------
+为什么需要使用 mybatis
+    spring jdbc 项目复杂时候出现问题：连接管理、sql语句硬编码  业务代码与sql耦合度高。
+    资源管理是：dataSource
+    对于方法的封装是：jdbcTemplate
+    对结果集的处理：rowMapper
+
+    没有解决硬编码的问题、参数只能按顺寻传入、实现了结果集到java对象的映射。没提供实体类到数据库的映射。
+
+    ORM object relational mapping 对象关系映射。
+
+    hibernate 自动的
+
+    mybatis 半自动、灵活、代码和sql语句不耦合 支持动态sql、mybatis的缓存、sql片段解决重复问题。
+
+
+    mybatis比较重要的对象
+        sqlSessionFactoryBuilder----->创建工程类（局部生命周期）
+        sqlSessionFactory----->创建会话（需要一直存在，单例）
+        sqlSession 操作数据库的。方法执行完就销毁了。
+        Mapper 通过sqlSession的getMapper()方法操作。存在一次事务的方法中。
+
+    mybatis核心配置
+        mybatis的配置文件一般分为两部分：
+            一部分是mybatis-configuration
+                mybatis的全局配置。比如说 mybatis的typeAlias、cache、数据库连接等信息.
+                标签
+                configuration---根节点。解析完对应的是configuration.java的对象。
+                一级标签 settings
+                type Alisa 简化拼写。
+
+
+            另外一部分是Mapper。
