@@ -221,3 +221,27 @@ mysql 优化
         找出慢查询sql
         show VARIABLES like '%slow_query%'
         show VARIABLES like '%long_query%'
+
+    explain 详解
+        id select_type type rows filtered extra
+        多表关联查询的时候是从内表先查，id序号大的先查询。（原则：先大后小，先上后下）
+        小表驱动原则：先查询数据量小的表。如b100，a100000条的时候先筛选出b表数据。
+        select_type
+         simple 简单查询 primary 主查询 sub query 内查询
+        type 访问类型
+          const 用唯一索引、主键查询 查询精准，只有一行数据。
+          eq_ref
+          ref 其他索引
+          range 对索引进行范围查询
+          index 查所有索引 比如查询索引
+          all 是没有索引
+        rows 预估扫描行 不准确
+
+        filtered
+            存储引擎层拿到数据 返回给server层 返回到server 然后在返回给客户端剩余多少。比例越高越好
+
+        extra
+            using index 查询的是索引 不需要回表的时候是index。
+            using where 存储引擎层不全是客户端需要的，需要到服务层过滤数据
+            using index condition 查询返回到server层，但是代价太大了，又返回给存储引擎层进行查询，索引下推。
+            using filesort
