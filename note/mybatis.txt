@@ -73,3 +73,11 @@ sql注入
                             select * from t where id=${} 比如入参为100 or 1=1 恒等
                             select * from t where id=#{} 比如入参为100 or 1=1 会将其编译成字符
                         association 和collection的区别
+
+        mybatis的 执行流程
+            sqlSessionFactoryBuilder
+            sqlSessionFactory
+            sqlSession
+            executor
+            statement handler
+
