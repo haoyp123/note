@@ -244,4 +244,16 @@ mysql 优化
             using index 查询的是索引 不需要回表的时候是index。
             using where 存储引擎层不全是客户端需要的，需要到服务层过滤数据
             using index condition 查询返回到server层，但是代价太大了，又返回给存储引擎层进行查询，索引下推。
-            using filesort
+            using file sort
+        begin/start transaction 开启事务不会立即生成快照。
+        start transaction with consistent snapshot
+
+--补充
+  begin/start transaction 开启事务不会立即生成快照。
+  start transaction with consistent snapshot
+  当前读 比如事务a b 都开启了事务，事务a查询的时候 查询k k是1，事务b update k为2  commit之前，在 在事务1中执行update k=k+1.那么这个值
+  如算？
+
+  普通索引和唯一索引的区别？
+    普通索引查询到记录后还会查询到下一个值，看是否满足条件。
+    唯一索引查询查询到后就直接返回了，不会在查询下一个值。
