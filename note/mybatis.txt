@@ -50,6 +50,26 @@ sql注入
                 configuration---根节点。解析完对应的是configuration.java的对象。
                 一级标签 settings
                 type Alisa 简化拼写。
+                    TypeHandlerRegistry()-->作用处理了java实体类和数据库的映射关系
+
+                ObjectFactory
+                    把数据库记录映射成java对象。不知道对象有什么属性以及类型。通过反射创建对象。对象工厂创建对象。
+                    defaultObjectFactory 通过create方法生成java对象。
 
 
             另外一部分是Mapper。
+
+                insert/update/delete/select
+
+                动态sql（if/choice(when otherwise trim) for each）
+
+                N+1问题？如何解决
+                    mybatis中，关联查询。mybatis中关联查询有两种情况一种是关联查询，一种是关联结果。
+                        关联查询的时候会出现N+1次问题。
+                        resultMap 和resultType的区别
+                        statement 和prepareStatement的区别 ${}和#{}
+                            prepareStatement 预编译可以防止sql注入
+                            什么是sql注入
+                            select * from t where id=${} 比如入参为100 or 1=1 恒等
+                            select * from t where id=#{} 比如入参为100 or 1=1 会将其编译成字符
+                        association 和collection的区别
