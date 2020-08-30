@@ -81,3 +81,16 @@ sql注入
             executor
             statement handler
 
+        mybatis的架构
+            接口层
+
+            核心层
+                解析配置文件
+                创建prepareStatement
+                参数处理
+                执行sql等操作
+                结果映射
+            基础层
+                日志、缓存、事务等
+        mybatis的缓存
+            一级缓存作用域是sql session
