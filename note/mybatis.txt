@@ -93,4 +93,29 @@ sql注入
             基础层
                 日志、缓存、事务等
         mybatis的缓存
-            一级缓存作用域是sql session
+            一级缓存作用域是sql session.
+            源码分析：sql session中有个执行器 executor --基本执行器有个base executor
+            基本执行器中有PerpetualCache，一级缓存。
+            在一个会话中，开启缓存后，会发送一次sql，不会重复查询，如果更新或者删除
+
+            二级缓存：namespace级，存在caching executor （同一个mapper的同一个方法）
+            在全局配置中开启、在自己的mapper中配置 二级缓存解决了跨会话数据共享的问题。
+
+mybatis 源码分析
+    build-->parseConfiguration()将文件解析为XML文件。
+    解析mapped statement
+    buildStatementFromContext(context.evalNodes("select|insert|update|delete"));
+    parseStatementNode
+    设置代理类：mapperRegister.addMapper
+        knownMappers.put(type, new MapperProxyFactory<>(type));
+        key是接口类型 value 是工厂类。
+
+    openSession()方法
+        创建事务工厂、创建事务
+        创建执行器。configuration.newExecutor()创建执行器
+        执行器有三种 简单 批量 重用
+            newExecutor()这里要是开启了二级缓存，则采用caching executor 进行包装。装饰器模式
+    base executor 是一个抽象类 实现了接口executor
+        simple executor 、reuse executor 、batch executor
+        都继承了base executor 里边定义了抽象方法 update 等抽象方法。
+        具体实现在子类。这种设计模式是模板方法。
