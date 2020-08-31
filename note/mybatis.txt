@@ -127,3 +127,8 @@ mybatis 源码分析
             不需要实现类，只需要把sql和代理对象结合起来即可。
 
         如何执行sql的。invoke方法执行。
+
+
+mybatis的插件
+    Executor  parameterHandler ResultSetHandler statementHandler
+    interceptorChain.pluginAll()方法关注
