@@ -119,3 +119,11 @@ mybatis 源码分析
         simple executor 、reuse executor 、batch executor
         都继承了base executor 里边定义了抽象方法 update 等抽象方法。
         具体实现在子类。这种设计模式是模板方法。
+
+    mapper 对象
+        getMapper()方法 获取MapperProxyFactory 代理工厂类
+            用代理工厂执行sql session
+        mybatis动态代理没有实现类？
+            不需要实现类，只需要把sql和代理对象结合起来即可。
+
+        如何执行sql的。invoke方法执行。
