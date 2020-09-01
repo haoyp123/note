@@ -134,11 +134,31 @@ mybatis的插件
     interceptorChain.pluginAll()方法关注
 
 spring 整合mybatis
-    sqlSessionFactoryBean
+     spring 整合mybatis
+        sqlSessionFactory 交由spring 进行管理。
+        sqlSession 交由spring管理。
+            ssm中，不在使用默认的defaultSqlSession,使用sqlSessionTemplate。
+            因为defaultSqlSession是线程不安全的。
+
+
+    sqlSessionFactoryBean（容器启动的时候，加载配置文件，xml解析，返回默认的sqlSession工厂）
+
+    mapperScanner 扫描 mapper接口
+
+    注入mapper 使用
+
 
     defaultSqlSession 不是线程安全的
+        单例的，不是线程安全的
     sqlSessionTemplate 是线程安全的
         为什么defaultSqlSession不是线程安全的，sqlSessionTemplate是线程安全的。
             sqlSessionTemplate
-    SqlSessionDaoSupport 继承这个返回sqlSessionTemplate
+    获取sqlSessionTemplate SqlSessionDaoSupport 继承这个返回sqlSessionTemplate
     利用threadLocal hold
+
+    为什么注入mapper接口就能使用？
+    mapperScanner 扫描 mapper接口
+
+    mapperFactoryBean
+
+    sqlSessHolder 是threadLocal
