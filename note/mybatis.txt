@@ -132,3 +132,13 @@ mybatis 源码分析
 mybatis的插件
     Executor  parameterHandler ResultSetHandler statementHandler
     interceptorChain.pluginAll()方法关注
+
+spring 整合mybatis
+    sqlSessionFactoryBean
+
+    defaultSqlSession 不是线程安全的
+    sqlSessionTemplate 是线程安全的
+        为什么defaultSqlSession不是线程安全的，sqlSessionTemplate是线程安全的。
+            sqlSessionTemplate
+    SqlSessionDaoSupport 继承这个返回sqlSessionTemplate
+    利用threadLocal hold
