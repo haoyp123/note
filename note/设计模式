@@ -52,3 +52,19 @@
     深克隆：克隆数据。
 
 代理设计模式
+    目的就是对目标对象的增强和保护。
+    静态代理和动态代理
+    静态代理：显示声明被代理对象  service 也是相当于一个静态代理。
+    动态代理：
+    动态代理反编译的类。
+    动态的继承了 proxy类实现了接口方法。
+    public final class $Proxy0 extends Proxy implements Person
+    super.h.invoke()
+    h是invocationHandler接口的子类，也就是代理类的invoke方法。
+
+    jdk生成代理的时候是生成一个类实现接口。
+    cglib是asm框架，自己写字节码，每次生成类。
+    jdk 是反射机制，每次都是通过反射调用。cglib是生成复杂，生成所有逻辑的class方法调用高。
+    cglib有个问题，对于final方法无法进行调用。
+
+
