@@ -87,7 +87,13 @@ Java内存模型
 		java通过executors提供创建4种创建线程池的方式。
 		缓存线程池、固定大小的线程池、支持定时任务的线程池、单例线程池。
 			
-	
+-------
+Java中线程的使用
+    Runnable 接口
+    Thread类
+    Callable/future
+    threadPool
+    一般应用场景：跑批、对账。
 	
 	
 	
