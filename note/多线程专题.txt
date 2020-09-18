@@ -92,8 +92,12 @@ Java中线程的使用
     Runnable 接口
     Thread类
     Callable/future
+        callable 接口提供了call方法，
+        futureTask 实现了runnable接口和future接口，实现了get方法获取线程返回消息。
+        thread 传个futureTask就可以并发执行。适配器设计模式。
     threadPool
     一般应用场景：跑批、对账。
+
 	
 	
 	
