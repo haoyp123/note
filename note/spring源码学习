@@ -31,9 +31,12 @@ spring 简化了开发
             配置web.xml  init-param annotation
         初始化
             读取配置、扫包初始化对象、交由IOC管理 依赖注入 MVC(会将交予handlerMapping管理)
+            this.getClass().getClassLoader().getResource()获取到地址通过file可以获取文件内所有内容
         运行
             调用doGet doPost 等方法 获取用户输入的地址 反射调用、返回前端。
     手写一个servlet的步骤：
         加载配置文件、获取配置信息进行扫包处理、初始化对象交由springIOC进行管理、
         进行依赖注入、生成handlerMapping映射器（请求和方法进行一个映射）、
         doDispatcher 进行请求转发
+
+    request.getParameterMap()返回对象是Map<String,String[]> 因为checkbox等是一个name对应多个value的
