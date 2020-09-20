@@ -40,3 +40,5 @@ spring 简化了开发
         doDispatcher 进行请求转发
 
     request.getParameterMap()返回对象是Map<String,String[]> 因为checkbox等是一个name对应多个value的
+
+    handlerMapping的主要功能就是做映射。url和method
