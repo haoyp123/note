@@ -73,6 +73,8 @@ spring 简化了开发
 
     IOC的初始化
     定位
+    就是对资源的定位和解析。容器不仅实现类listableBeanFactory也继承了DefaultResourceLoader资源加载器。
+    从而方便重写子类方法实现从文件网络等多个位置将资源加载成beanDefinition。
 
 
     加载
