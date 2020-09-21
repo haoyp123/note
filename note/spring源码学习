@@ -42,3 +42,65 @@ spring 简化了开发
     request.getParameterMap()返回对象是Map<String,String[]> 因为checkbox等是一个name对应多个value的
 
     handlerMapping的主要功能就是做映射。url和method
+
+------------------
+源码分析
+    控制反转
+    IOC,将对象由自己创建和管理转交给容器进行创建和管理。
+
+    依赖注入
+    DI,将对象中需要的属性等由主动寻找，转为被动注入，在初始化的时候注入对象的关系。
+
+    spring中对象与对象的关系文件存储位置在哪
+        xml/properties等 位置 classpath /network /filesystem
+    如何统一配置文件标准
+        beanDefinition--文件的定义标准
+    如何对不同的文件进行解析?
+        采用策略模式。
+
+    IOC的结构
+    beanFactory
+    autowireCapableBeanFactory 自动注入工厂  listableBeanFactory 集合属性的工厂 hierarchicalBeanFactory 继承的工厂
+
+    configurableListableBeanFactory
+
+    defaultListableBeanFactory 实现类，最顶层的实现类。基本功能都有了。
+
+    比较重要的
+    beanFactory
+    defaultListableBeanFactory
+    beadDefinitionReader
+
+    IOC的初始化
+    定位
+
+
+    加载
+
+
+
+    注册
+
+
+    spring中是通过继承使父子容器变为一个容器。configurableApplicationContext
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
