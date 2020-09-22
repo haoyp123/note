@@ -78,10 +78,12 @@ spring 简化了开发
 
 
     加载
+     加载成为beanDefinition
 
 
 
     注册
+     注册到IOC容器
 
 
     spring中是通过继承使父子容器变为一个容器。configurableApplicationContext
