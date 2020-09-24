@@ -45,7 +45,7 @@ spring 简化了开发
 
 ------------------
 源码分析
-    控制反转
+ 控制反转
     IOC,将对象由自己创建和管理转交给容器进行创建和管理。
 
     依赖注入
@@ -89,6 +89,23 @@ spring 简化了开发
     spring中是通过继承使父子容器变为一个容器。configurableApplicationContext
 
 
+
+依赖注入
+    IOC
+    BeanFactory
+    AbstractBeanFactory
+
+    初始化
+    SimpleInstantiationStrategy
+    访问器
+    AbstractPropertiesAccessor
+
+    真正实现
+    BeanWrapper
+
+    依赖注入的发生时间
+    getBean()
+    lazy-init属性时候，容器解析bean定义时发生。
 
 
 
