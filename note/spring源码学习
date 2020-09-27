@@ -95,13 +95,17 @@ spring 简化了开发
     BeanFactory
     AbstractBeanFactory
 
-    初始化
+    初始化（beanDefinition）
     SimpleInstantiationStrategy
-    访问器
-    AbstractPropertiesAccessor
 
-    真正实现
+    依赖注入
+    AbstractPropertiesAccessor----》注入动作实现
+
+
+    真正实例化后获取
     BeanWrapper
+
+
 
     依赖注入的发生时间
     getBean()
