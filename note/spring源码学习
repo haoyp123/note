@@ -88,8 +88,13 @@ spring 简化了开发
 
     spring中是通过继承使父子容器变为一个容器。configurableApplicationContext
 
+Ioc的加载流程简述
+    Ioc就是将对象由自己管理转变为交给容器管理。
 
+    Ioc容器不仅实现了BeanFactory接口也实现了resourceLoader接口
+    通过DefaultResourceLoader完成对资源的加载定位。
 
+    Ioc的初始化 是从refresh()方法开始的。
 依赖注入
     IOC
     BeanFactory
@@ -110,6 +115,8 @@ spring 简化了开发
     依赖注入的发生时间
     getBean()
     lazy-init属性时候，容器解析bean定义时发生。
+
+流程简述
 
 
 
