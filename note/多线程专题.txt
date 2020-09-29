@@ -98,7 +98,16 @@ Java中线程的使用
     threadPool
     一般应用场景：跑批、对账。
 
-	
+线程的几种状态
+ 创建
+
+ 就绪
+     等待  wait
+ 运行
+
+ 阻塞      synchronized
+
+ 销毁
 	
 	
 	
