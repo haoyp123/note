@@ -78,7 +78,7 @@ Java内存模型
 		每次都从主内存中读取值。
 		另外，同步方法，同步代码块结束后，会刷新主内存。
 		synchronized 不仅保证可见性还保证原子性。
-	4.threadlocal
+	4.threadLocal
 		使用前先初始化
 		使共享变量私有，每个线程使用自己的变量
 		原理是：threadlocal底层维护了一个threadlocalmap
@@ -109,8 +109,9 @@ Java中线程的使用
  阻塞      synchronized
 
  销毁
-	
-	
+
+线程的停止
+    interrupt
 	
 	
 	
