@@ -54,7 +54,7 @@
 		lock 是接口 常用的是重入锁reentrantLock 和condition 一起使用
 	4.condition 
 		condition 是绑定在lock上的，可以为多个线程建立不同的condition，
-		synchrionized只能实现一个线程阻塞，condition可以实现多个线程阻塞
+		synchronized只能实现一个线程阻塞，condition可以实现多个线程阻塞
 		
 	5.线程的中断
 		interrupt 对于处于阻塞状态的线程，使用interrupt会抛出异常。
