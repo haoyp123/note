@@ -160,8 +160,39 @@ notify »½ÐÑµÈ´ý¶ÓÁÐµÄÏß³Ì£¬½«ÆäÌí¼Óµ½Í¬²½¶ÓÁÐ£¬Ö»ÓÐÍ¬²½¶ÓÁÐµÄÏß³Ì²ÅÓÐ»ú»á»ñÈ¡Ëø¡
 notify Ö»ÊÇ»½ÐÑµÈ´ý¶ÓÁÐµÄÏß³Ì£¬Êµ¼ÊÖ´ÐÐµÄÊ±ºòÖ»ÓÐµ±ÁíÍâÒ»¸öÏß³Ì monitor exitÒÔºó²ÅÄÜ»ñÈ¡
 wait»áÊÍ·ÅËø sleep²»»áÊÍ·ÅËø¡£
 
+volatile¹Ø¼ü×Ö
+    ±£Ö¤Ïß³Ì¿É¼ûÐÔ
+    ÈçºÎ±£Ö¤¿É¼ûÐÔ
+        ÐÞ¸Ä±äÁ¿µÄÊ±ºò»á¼ÓÒ»¸ölockÖ¸Áî£¨»ùÓÚ¿É¼ûÐÔ»òÕß»º´æËø´ïµ½¿É¼ûÐÔ£©
+    ¿É¼ûÐÔµ½µ×ÊÇÊ²Ã´
+        Ó²¼þ²ãÃæ
+        JMM²ãÃæ
+        Ó²¼þ²ãÃæ£ººËÐÄ×é¼þÊÇCPU ÄÚ´æ IO
+        ÈýÕßµÄËÙ¶È²îÒìºÜ´ó¡£
 
-	
+        ¶ÔÓÚcpuµÄÀûÓÃÓÅ»¯
+            Ôö¼ÓcpuµÄ¸ßËÙ»º´æ
+            ÒýÈë½ø³ÌºÍÏß³Ì->Ïß³Ì×èÈû£¬cpuÊ±¼äÆ¬ÇÐ»»£¬Ìá¸ßÐ§ÂÊ¡£
+            Ö¸ÁîÓÅ»¯->ÖØÅÅÐò¡£
+        ÓÉÓÚcpuºÍÖ÷ÄÚ´æÖ®¼äµÄ´¦ÀíËÙ¶ÈÏà²î±È½Ï´ó£¬Òò´Ë£¬ÔÚcpuºÍÄÚ´æÖ®¼äÔö¼ÓÁË¸ßËÙµÄ»º´æ£¬ÓÃÒÔÌá¸ßÐ§ÂÊ
+        ¶ÁÈ¡ÄÚ´æÊý¾ÝÏÈ°ÑÄÚ´æÊý¾Ý»º´æµ½cpu¸ßËÙ»º´æÖÐ£¬ÐÞ¸ÄµÄÊ±ºò£¬ÏÈÍ¬²½»º´æÔÚÍ¬²½Ö÷ÄÚ´æ¡£
+        »º´æÓÐÈý¼¶L1 L2 L3
+        L1ºÍL2ÊÇcpuË½ÓÐµÄ»º´æ¡£L3ÊÇcpu¹²ÓÐµÄ
+
+        ¸ßËÙ»º´æ´øÀ´µÄÎÊÌâ¾ÍÊÇ£¬»º´æÒ»ÖÂÐÔµÄÎÊÌâ¡£
+        ½â¾ö£ºÍ¨¹ý¼ÓËø½â¾ö¡£
+        cpu Ó²¼þ·½Ãæ£º
+        ×ÜÏßËø£ºÖ»ÓÐÒ»¸öÏß³ÌÄÜÐÞ¸ÄÄÚ´æÊý¾Ý£¬½«²¢ÐÐ±äÎª´®ÐÐ£¬Ð§ÂÊ²»¸ß
+        »º´æËø£º»ùÓÚ»º´æÒ»ÖÂÐÔÐ­ÒéµÄ¡£MESIÐ­Òé£¨»á´øÀ´×èÈûÎÊÌâ£¬cpuÖ®¼äµÄÍ¨ÐÅ£©¡£
+        Îª½â¾öcpuÖ®¼äÍ¨ÐÅµÄ×èÈûÎÊÌâ£¬cpu»á°ÑÐÞ¸ÄµÄÖµÐ´Èëµ½store bufferÖÐ,
+        ÊÇÒì²½Í¨ÐÅ£¬Õâ»áÔì³ÉcpuÂÒÐòÖ´ÐÐ£¬Ò²¾ÍÊÇÖØÅÅÐò¡£
+
+        cpuÈí¼þ²ãÃæ£ºÄÚ´æÆÁÕÏ
+        ÔÚÊÊµ±µÄµØ·½¼ÓÉÏÄÚ´æÆÁÕÏ´ïµ½¿É¼ûÐÔµÄÄ¿µÄ¡£
+        ¶ÁÆÁÕÏ¡¢Ð´ÆÁÕÏºÍÈ«ÆÁÕÏ
+
+	    JMM²ãÃæ
+
 	
 	
 	
