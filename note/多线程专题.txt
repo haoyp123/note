@@ -202,6 +202,9 @@ volatile关键字
 	    工作内存
 	        线程先读取工作内存在读取主内存，线程私有
 	    JMM通过volatile synchronized final 等方式实现。
+
+	    可见性规则happens-before
+	    
 	
 	
 	
