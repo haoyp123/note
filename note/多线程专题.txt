@@ -216,8 +216,22 @@ volatile关键字
 	    JMM就是解决了可见性和缓存一致性的问题。
 	    可见性的规则就happens-before。
 	
-	
-	
+JUC
+    重入锁 锁是允许重入的，一个线程获取锁后，再次访问锁的方法的时候不需要再次获取锁只需要记录次数。
+    读写锁 是共享锁
+    ReentrantLock 重入互斥锁。
+
+AQS--同步工具 abstract queued synchronizer
+  当多个线程竞争锁的时候，其他线程怎么办。
+  特性
+    独占 只能有一个线程
+    共享 读写锁
+  AQS是同步队列，维护一个双向链表。每个数据是一个node节点，节内部有个pre next 和thread id等信息。
+  锁的基本要素
+    需要一个共享的数据记录锁的状态。（无锁还是有锁）
+	state:
+	先获取状态调用了底层的unsafe方法
+	CAS unsafe.compareAndSwapInt(this, stateOffset, expect, update);
 	
 	
 	
