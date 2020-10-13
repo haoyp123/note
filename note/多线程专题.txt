@@ -222,7 +222,7 @@ JUC
     ReentrantLock 重入互斥锁。
 
 AQS--同步工具 abstract queued synchronizer
-  当多个线程竞争锁的时候，其他线程怎么办。
+  当多个线程竞争锁的时候，其他线程怎么办。阻塞
   特性
     独占 只能有一个线程
     共享 读写锁
@@ -233,8 +233,29 @@ AQS--同步工具 abstract queued synchronizer
 	先获取状态调用了底层的unsafe方法
 	CAS unsafe.compareAndSwapInt(this, stateOffset, expect, update);
 	
-	
-	
+	AQS源码分析
+	    AbstractQueuedSynchronizer.java----抽象的
+	    compare and set state()---->unsafe的原子性操作，比较下内存地址偏移与预期值是否一致
+	    一致的话，说明可以获取到锁。然后线程获取锁。
+
+        tryAcquire（） AbstractQueuedSynchronizer.java 的抽象方法，这块的设计模式是模板模式。
+            因为可重入锁分为了公平锁和非公平锁。各自实现。
+
+	    acquire(1)-->try acquire(1)
+	        在尝试获取一次锁。如果线程线程1 已经unlock的时候，线程2 获取锁，sate=0
+	        如果线程1，再次获取锁，会对state的值+1，可 重入锁。
+
+	    获取锁失败，则会添加到阻塞队列
+	    addWaiter(Node.exclusive)-->添加到一个阻塞队列
+	        把当前线程封装成一个Node节点
+	        enq(node) 当前线程 创建链表（compareAndSetHead、compareAndSetTail unsafe的原子性操作）
+
+	    acquire(addWaiter(Node.exclusive))-->自旋方式获取锁
+
+        shouldParkAfterFailedAcquire()
+        parkAndCheckInterrupt() --》thread.interrupted()中断线程
+
+
 	
 	
 	
