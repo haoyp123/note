@@ -250,13 +250,15 @@ AQS--同步工具 abstract queued synchronizer
 	        把当前线程封装成一个Node节点
 	        enq(node) 当前线程 创建链表（compareAndSetHead、compareAndSetTail unsafe的原子性操作）
 
-	    acquire(addWaiter(Node.exclusive))-->自旋方式获取锁
+	    acquireQueued(addWaiter(Node.exclusive))-->自旋方式获取锁
+	        自旋方式获取锁
+                shouldParkAfterFailedAcquire()
+                parkAndCheckInterrupt() --》 park()线程挂起 thread.interrupted()中断线程并且复位】
+                将线程挂起
 
-        shouldParkAfterFailedAcquire()
-        parkAndCheckInterrupt() --》thread.interrupted()中断线程
-
-
-	
+        unlock释放锁
+            state 改成0  设置无锁状态
+	        acquireQueued 自旋中，会获取锁。
 	
 	
 	
