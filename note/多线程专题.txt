@@ -262,5 +262,8 @@ AQS--同步工具 abstract queued synchronizer
 	
 	
 	
-	
-	
+Conditional
+    wait 和notify通讯
+
+CountDownLatch 实现线程之间同步的，部内有个计数器，当计数器不为0时候，会阻塞。
+说白了，起的是一个栅栏的作用。使用的是AQS技术内部是共享锁。
