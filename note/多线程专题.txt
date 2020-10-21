@@ -204,6 +204,11 @@ volatile关键字
 	    JMM通过volatile synchronized final 等方式实现。
 
 	    可见性规则happens-before
+	        前一个操作结果对后一个是可见的。
+	        每个线程的中的前一个操作对后一个是可见的。
+	        volatile关键字，每个写操作对后面的读操作是可见的。
+	        传递性，a happens-before b，b happens-before c 那么 a happens-before c
+
 	    
 	总结：
 	    为什么要使用volatile?为解决缓存一致性的原因。
