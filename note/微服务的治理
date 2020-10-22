@@ -61,6 +61,15 @@ spring boot
         AutoConfigurationImportSelector
         AutoConfigurationPackages.Registrar
         动态加载
+        importSelector
+        importBeanDefinitionRegister
+        实现importSelector接口可以导入bean 也可以通过注解模式通过注解实现
+        @Retention(RetentionPolicy.RUNTIME)
+        @Import(CacheSelector.class)
+        public @interface CacheInterface {
+        }
+        这样使用@cacheInterface注解就可以使用了
+
 
     @ComponentScan
         扫包，交由容器托管
