@@ -63,4 +63,4 @@ spring boot
         动态加载
 
     @ComponentScan
-        扫包，交由容器脱管
+        扫包，交由容器托管
