@@ -71,5 +71,9 @@ spring boot
         这样使用@cacheInterface注解就可以使用了
 
 
+    springboot的自动加载
+        AutoConfigurationMetaData路径：
+        META-INF/spring-autoconfigure-metadata.properties
+        SPI技术：扩展点。resource/META-INFO/spring.factories
     @ComponentScan
         扫包，交由容器托管
