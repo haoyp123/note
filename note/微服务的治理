@@ -87,3 +87,7 @@ spring boot
 
     自定义stater
     命名规则 xxx-spring-boot-start
+    注入properties文件
+    @EnableConfigurationProperties(HelloProperties.class)
+    注入java
+    @Configuration
