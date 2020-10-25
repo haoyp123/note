@@ -83,3 +83,7 @@ spring boot
 
     @ComponentScan
         扫包，交由容器托管
+
+
+    自定义stater
+    命名规则 xxx-spring-boot-start
