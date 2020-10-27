@@ -91,3 +91,8 @@ spring boot
     @EnableConfigurationProperties(HelloProperties.class)
     注入java
     @Configuration
+
+服务的注册发现
+    为什么要注册发现服务组件？服务地址的维护，地址的动态感知，一个服务宕机以后如何剔除。
+    zookeeper 分布式一致性问题。一个请求，在所有节点达到一致。
+        zookeeper是分布式协调工具，协调的是服务内部如何按规则运行。
