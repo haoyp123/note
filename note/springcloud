@@ -1,0 +1,6 @@
+一、 服务注册和发现
+    常见的注册中心有zookeeper eureka  concul
+    注册中心有两种：
+        中心化和去中心化（相互同步，没有主从）
+    eureka
+    http://127.0.0.1:8761/eureka/apps 应用信息
