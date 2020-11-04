@@ -116,3 +116,6 @@ spring boot
 
     java对zookeeper的访问
         zkClient 和curator
+        权限设置ACL
+
+    节点监听watcher
