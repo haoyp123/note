@@ -125,6 +125,7 @@ spring boot
         leader latch
             每个节点在zk服务器上创建临时节点，最小的节点是aster。
             其他节点监听上一个节点。
+
         leader selector
     手写注册中心
         1.zookeeper 写一个register方法
