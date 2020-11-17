@@ -5,5 +5,10 @@
     eureka
     http://127.0.0.1:8761/eureka/apps 应用信息
     随机端口 server.port: 0 随机端口容易出问题。
+    出现的问题：每个服务注册到注册中心都会序列化为一个application，规模越大，客户端容易full gc。
+
+    registry-fetch-interval-seconds: 30
+    定时刷新默认30秒读取注册中心数据，对内存也有一定压力。
 
     使用zookeeper作为注册中心
+        对节点进行监听的方式进行更新。
