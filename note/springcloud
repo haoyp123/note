@@ -25,3 +25,16 @@
         xml约束:
             DTD 松散的
             XSD Schema 强制性的
+    feign、spring cloud open feign
+    使用场景都是客户端声明，请求不一样，请求映射不一样
+    feign @RequestLine
+    open feign @requestMapping 使用的spring mvc一套。
+
+    spring cloud 利用feign的高扩展性，使用标准的spring web mvc注解来声明java接口
+
+    spring cloud open feign 是通过java接口的方式来声明服务提供者的元信息，通过调用接口实现rest通讯。
+
+    接口与服务提供者如何映射
+    @FeignClient 注解指定名称可能用到了服务发现
+    @enableFeignClients 如何感知使用@FeignClient配置类的
+    feign如何序列化返回的
