@@ -12,3 +12,16 @@
 
     使用zookeeper作为注册中心
         对节点进行监听的方式进行更新。
+
+
+
+二、 服务调用原理
+    rpc：远程调用，就是一台计算机调用另一台计算机的子程序，无需额外编程.
+    java rmi 二进制协议
+      java序列化协议 传输对象, serializable 接口 list collection等接口为什么没有继承serializable,而实现类实现该接口,
+    因为接口是无状态的,实现类是有状态的,最基本体现在 字段上,字段体现状态.
+
+    webservice 文本协议
+        xml约束:
+            DTD 松散的
+            XSD Schema 强制性的
