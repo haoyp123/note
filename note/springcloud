@@ -38,3 +38,4 @@
     @FeignClient 注解指定名称可能用到了服务发现
     @enableFeignClients 如何感知使用@FeignClient配置类的
     feign如何序列化返回的
+    eureka.instance.hostname--配置的是当前实例的host，非3eureka的host
