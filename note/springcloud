@@ -5,6 +5,16 @@
     eureka
     http://127.0.0.1:8761/eureka/apps 应用信息
     随机端口 server.port: 0 随机端口容易出问题。
+    @value("${server.port}")获取得随机端口是0
+    想要获取正确的端口如下：
+    public TestFeignController(Environment environment) {
+        this.environment = environment;
+    }
+    String getPort(){
+        return environment.getProperty("local.server.port");
+    }
+    外部化配置有时候不靠谱。
+
     出现的问题：每个服务注册到注册中心都会序列化为一个application，规模越大，客户端容易full gc。
 
     registry-fetch-interval-seconds: 30
