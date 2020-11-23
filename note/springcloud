@@ -49,3 +49,17 @@
     @enableFeignClients 如何感知使用@FeignClient配置类的
     feign如何序列化返回的
     eureka.instance.hostname--配置的是当前实例的host，非3eureka的host
+
+    @EnableFeignClients 注解开启实现服务调用
+    @Import(FeignClientsRegistrar.class) 需要导入
+
+    @Import 注解 三种用用法
+    1.直接导入类   2.importSelector  3.importBeanDefinitionRegister
+
+    @configurationProperties 注解报错
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <version>2.3.3.RELEASE</version>
+      <optional>true</optional>
+    </dependency>
