@@ -63,3 +63,11 @@
       <version>2.3.3.RELEASE</version>
       <optional>true</optional>
     </dependency>
+
+    feign的源码阅读
+
+    注册默认配置
+    注册标注@FeignClient的配置类
+    registerDefaultConfiguration(metadata, registry);
+
+    registerFeignClients(metadata, registry);
