@@ -71,3 +71,6 @@
     registerDefaultConfiguration(metadata, registry);
 
     registerFeignClients(metadata, registry);
+
+    逻辑简析
+    @EnableFeignClient 得到元信息。-->标注接口定义的类 FeignClientFactoryBean 被标注接口的代理对象
