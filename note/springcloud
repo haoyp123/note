@@ -77,3 +77,12 @@
 
 
     loadBalanceFeignClient 实现了服务名和地址的映射
+
+
+
+三、 负载均衡
+
+    IRule接口
+    随机：
+    轮询：
+    最小活跃数：
