@@ -82,7 +82,9 @@
 
 三、 负载均衡
 
-    IRule接口
-    随机：
-    轮询：
-    最小活跃数：
+    核心IRule接口
+    服务实例
+
+    随机 randomRule：
+    轮询 roundRobinRule：
+    最小活跃数 beastAvailableRule：
