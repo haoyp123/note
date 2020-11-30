@@ -88,3 +88,18 @@
     随机 randomRule：
     轮询 roundRobinRule：
     最小活跃数 beastAvailableRule：
+
+    ILoadBalance没有直接注入IRule接口或者方法，他的抽象实现也没有，直到具体实现才与IRule关联。
+    ILoadBalance实现类不负责具体的负载均衡策略，通过choose server来负责，导致ILoadBalance相对较少，IRule相对较多。
+    DynamicServerListLoadBalancer为例
+    ILoadBalance和IRule的关系是1对1的。一负载均衡策略对应一个负载均衡器
+        IClientConfig clientConfig 配置
+        IRule rule, IPing ping
+        ServerList<T> serverList 服务实例列表
+        ServerListFilter<T> filter 服务列表过滤器
+            过滤不可用的服务
+            灰度
+            动态路由
+        ServerListUpdater serverListUpdater 更新
+            周期更新-30秒一次拉取注册中心服务。
+            服务端推送-新增或者移除服务实例。
