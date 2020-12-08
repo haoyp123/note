@@ -103,3 +103,4 @@
         ServerListUpdater serverListUpdater 更新
             周期更新-30秒一次拉取注册中心服务。
             服务端推送-新增或者移除服务实例。
+    Ribbon整合Eureka服务列表更新周期是多久？
