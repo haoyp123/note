@@ -117,3 +117,8 @@
     熔断策略：按信号量或者超时时间，默认是超时时间。
     有效率：
     hystrix
+    使用步骤
+        启动注解@EnableHystrix
+        配置hystrix注解或者实现hystrixCommand抽象类
+        合理设置hystrix属性
+        实现fallback属性
