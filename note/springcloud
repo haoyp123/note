@@ -122,3 +122,5 @@
         配置hystrix注解或者实现hystrixCommand抽象类
         合理设置hystrix属性
         实现fallback属性
+
+五、 stream
