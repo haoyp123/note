@@ -127,10 +127,13 @@
 
 六、 网关gateway
     核心就是：服务发现和转发
+        转发：httpclient
     服务发现就是discoveryClient
 
 
     原理：映射处理+filter
+
+
 
     外部化配置：GatewayProperties
         一个gateway可以有多个路由，一个路由可以有多个前置条件。
