@@ -2,11 +2,9 @@
 
 #### 1.redis存储的数据类型
 
-- int
-
-- float
-
 - string
+
+- hash
 
 - list
 
@@ -14,7 +12,9 @@
 
 - zset
 
-- hyperloglog
+- hyperloglogs 基数统计
+
+- geo 地理位置
 
   
 
@@ -85,9 +85,9 @@ ht hashtable
 
 通过leavel 给链表分层，减少查找次数。
 
+## 二、redis原理
 
-
-#### 4.redis的过期策略
+#### 1.redis的过期策略
 
 1. 定时淘汰 expire key ttl 10 通过定时器 可以定时精准删除
 
@@ -97,7 +97,7 @@ ht hashtable
 
    redis 用的是定期+惰性过期
 
-#### 5.redis的淘汰策略
+#### 2.redis的淘汰策略
 
 1. LRU least recently used 最近最少使用             （设置了ttl 和所用key）
 2. LFU least frequently used 最近最少使用频率  （设置了ttl 和所用key）
@@ -105,3 +105,45 @@ ht hashtable
 4. 根据ttl属性 将接近过期时间的key删除
 5. 不删除，不在添加值。
 
+#### 3.redis的持久化
+
+1. rdb  redis data base
+
+   1. 自动触发 多少秒内 多少条数据被修改
+
+      - save 900 1
+      - save 300 10
+      - save 60 1000
+
+   2. 手动触发 
+
+      - save 
+
+        会阻塞进程一般不用
+
+      - bgsave
+
+        会fork一个子进程，子进程进行持久化。
+
+      
+
+2. aof append to file 存储的是指令
+
+   1. 设置记录时间
+
+      - appendfsync everysec 每一秒
+      - appendfsync always  实时
+      - appendfsync no 不同步
+
+   2. rewrite 同一样的操作指令只记录一次。bgrewriteaof
+
+      在重写的时候新接受到的指令会存储到一个缓存中，重写完毕后追加到aof。
+
+   3. rewrite触发时间
+
+      1. 达到上次重写文件的100%
+      2. 达到设置的大小 默认64M
+
+#### 4.redis的高级
+
+1. 
