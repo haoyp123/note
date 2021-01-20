@@ -1,281 +1,284 @@
-�̵߳Ļ���֪ʶ
+线程的基础知识
 
-1.���̺��̵߳�����
-	�����൱��һ��Ӧ�ó����������̵߳ļ��ϣ�ÿ���߳���һ��ִ��·����
+1.进程和线程的区别
+	进程相当于一个应用程序，是所有线程的集合，每个线程是一条执行路径。
 
 
-2.ΪʲôҪ�ö��߳�
-	��߳���ִ��Ч�ʡ�
-	cpuͨ�������л��߳�ִ�У����������������ϵ�ͬʱ���У�
-	���Ա�����λʱ����ִ��Ч�ʲ�û����ߣ�Ϊʲô�����ִ��Ч�ʡ����Ӳ��--->���
+2.为什么要用多线程
+	提高程序执行效率。
+	cpu通过快速切换线程执行，并不是真正意义上的同时进行，
+	电脑本身单位时间内执行效率并没有提高，为什么会提高执行效率。提高硬件--->多核
 
-3.�̵߳Ĵ�����ʽ
-	�̳�Thread�ࡢʵ��runnable�ӿڡ������ڲ��ࡣ
+3.线程的创建方式
+	继承Thread类、实现runnable接口、匿名内部类。
 
-4.�̳߳���API
-	sleep������ʹ�̴߳�����״̬������״̬����ʱ�󣬼�����������״̬������ʹ���߳�������Ҳ�����ͷ�����
-	getId����ȡ�߳�ID��cpu���䲻���ظ���
-	getName����ȡ�߳����ơ�
-	�߳��е��쳣��ֻ�ܱ������ܱ��׳���
-	run����û��throw exception����Լ��
-	JVM���������Դ��������һ��������߳��Ƕ���ִ�еĴ���Ƭ�ϣ��̵߳�����Ӧ�����߳��Լ������������Ҫί�е��ⲿ����
+4.线程常用API
+	sleep方法：使线程从运行状态到休眠状态，到时后，继续进入运行状态，不会使用线程死掉，也不会释放锁。
+	getId：获取线程ID，cpu分配不会重复。
+	getName：获取线程名称。
+	线程中的异常，只能被捕获不能被抛出。
+	run方法没有throw exception进行约束(JNI回调的方法)
+	JVM的这种设计源自于这样一种理念：“线程是独立执行的代码片断，线程的问题应该由线程自己来解决，而不要委托到外部。”
 
-5.���̵߳�״̬
-	���� ���� ���� ����  ����
+5.多线程的状态
+	创建 就绪 运行 阻塞  死亡
 	
-6.���̷߳�����������
-	�߳̿��ĺ�cpu�����й�ϵ��
-	����һ���߳������2������ݡ�10���������Ҫ5���̡߳�
-	���崦�����ݵ��࣬����ʹ�ù��캯�������ù��캯���������ݡ�
+6.多线程分批处理数据
+	线程开的和cpu核数有关系。
+	假设一个线程最多跑2万个数据。10万个数据需要5个线程。
+	定义处理数据的类，可以使用构造函数，利用构造函数传递数据。
 	
 
-	
-���߳�֮���ͨ��
 
-1.�̰߳�ȫ
-	������̹߳�ͬ����ͬһ��ȫ�ֱ�����ʱ���п���������ݳ�ͻ�������̰߳�ȫ���⡣
-2.ͬ�������� this��
+多线程之间的通信
 
-3.��̬�����ϵ�synchronized ������������ǰ���class�ļ�
+1.线程安全
+	当多个线程共同操作同一个全局变量的时候，有可能造成数据冲突，出现线程安全问题。
+2.同步方法是 this锁
 
-4.����
-	�߳�֮���໥���жԷ�������
+3.静态方法上的synchronized 锁是类锁，当前类的class文件
 
-	
-	
-	
-���߳�ͨѶ
-	1.wait �� notify
-	2.lock��
-		synchronized---�����ֶ������ͽ���
-		lock����Ҫ�ֶ��ͷţ���ʱ�����ܳ��ֵ����⣺�ͷ���֮ǰ�Ĵ���������쳣�������������
-		�����ʽ��try catch finally ���ͷ���д��finally�С�
-	3.lock��synchronized������
-		lock �ǽӿ� ���õ���������reentrantLock ��condition һ��ʹ��
-	4.condition 
-		condition �ǰ���lock�ϵģ�����Ϊ����߳̽�����ͬ��condition��
-		synchronizedֻ��ʵ��һ���߳�������condition����ʵ�ֶ���߳�����
-		
-	5.�̵߳��ж�
-		interrupt ���ڴ�������״̬���̣߳�ʹ��interrupt���׳��쳣��
-	6.join����
-		��һ���߳���ִ������ִ������һ���̣߳��߳�������join��Ȼ������������һ���̡߳�
-		
-	
-Java�ڴ�ģ��
-	1.����
-	�߳��������ԣ�ԭ���ԡ������ԺͿɼ��ԡ�
-	�ɼ���:һ���߳��޸�����֮�������߳��ܹ����������޸ĺ��ֵ��
-	������:����˳��ִ�С�
-	2.java�ڴ�ṹ
-		ָ���Ƕ�ջ������
-	  java�ڴ�ģ��
-		jmm�����ڴ�ģ�ͣ��������̺߳����ڴ�֮��ĳ����ϵ��
-		�߳�֮ǰ�Ĺ��������������ڴ��С�
-		ÿ���߳���һ�������ڴ棬�����ڴ�����������ݸ�����Ȼ��ˢ�����̡߳�
-		֮���Գ����̰߳�ȫ���⣬����Ϊ�����̲߳��ܼ�ʱ�����޸ĵ����ݡ�
-	3.volatile �ؼ���
-		ÿ�ζ������ڴ��ж�ȡֵ��
-		���⣬ͬ��������ͬ�����������󣬻�ˢ�����ڴ档
-		synchronized ������֤�ɼ��Ի���֤ԭ���ԡ�
-	4.threadLocal
-		ʹ��ǰ�ȳ�ʼ��
-		ʹ��������˽�У�ÿ���߳�ʹ���Լ��ı���
-		ԭ���ǣ�threadlocal�ײ�ά����һ��threadlocalmap
-	5.�̳߳�
-		ͨ���̳߳ع����̣߳���Ϊ��������ֹͣһ���̷߳ǳ������������̳߳ؿ��Լ����ڴ����ġ�
-		��ҵ��ʹ���̳߳ص�ʱ���spring���ϡ�
-		javaͨ��executors�ṩ����4�ִ����̳߳صķ�ʽ��
-		�����̳߳ء��̶���С���̳߳ء�֧�ֶ�ʱ������̳߳ء������̳߳ء�
-			
+4.死锁
+	线程之间相互持有对方的锁。
+
+
+​	
+​	
+多线程通讯
+​	1.wait 和 notify
+​	2.lock锁
+​		synchronized---不能手动开锁和解锁
+​		lock锁需要手动释放，此时，可能出现的问题：释放锁之前的代码如果抛异常，会造成死锁。
+​		解决方式：try catch finally 把释放锁写在finally中。
+​	3.lock和synchronized的区别
+​		lock 是接口 常用的是重入锁reentrantLock 和condition 一起使用
+​	4.condition 
+​		condition 是绑定在lock上的，可以为多个线程建立不同的condition，
+​		synchronized只能实现一个线程阻塞，condition可以实现多个线程阻塞
+​		
+	5.线程的中断
+		interrupt 对于处于阻塞状态的线程，使用interrupt会抛出异常。
+	6.join方法
+		让一个线程先执行完在执行另外一个线程，线程启动后join，然后再启动另外一个线程。
+
+
+​	
+Java内存模型
+​	1.特性
+​	线程三大特性：原子性、有序性和可见性。
+​	可见性:一个线程修改数据之后，其他线程能够立即看到修改后的值。
+​	有序性:按照顺序执行。
+​	2.java内存结构
+​		指的是堆栈方法区
+​	  java内存模型
+​		jmm就是内存模型，定义了线程和主内存之间的抽象关系。
+​		线程之前的共享变量存在主内存中。
+​		每个线程有一个本地内存，本地内存操作共享数据副本，然后刷新主线程。
+​		之所以出现线程安全问题，是因为其他线程不能及时看到修改的数据。
+​	3.volatile 关键字
+​		每次都从主内存中读取值。
+​		另外，同步方法，同步代码块结束后，会刷新主内存。
+​		synchronized 不仅保证可见性还保证原子性。
+​	4.threadLocal
+​		使用前先初始化
+​		使共享变量私有，每个线程使用自己的变量
+​		原理是：threadlocal底层维护了一个threadlocalmap
+​	5.线程池
+​		通过线程池管理线程，因为启动或者停止一个线程非常缓慢。利用线程池可以减少内存消耗。
+​		企业在使用线程池的时候会spring整合。
+​		java通过executors提供创建4种创建线程池的方式。
+​		缓存线程池、固定大小的线程池、支持定时任务的线程池、单例线程池。
+​			
 -------
-Java���̵߳�ʹ��
-    Runnable �ӿ�
-    Thread��
+Java中线程的使用
+    Runnable 接口
+    Thread类
     Callable/future
-        callable �ӿ��ṩ��call������
-        futureTask ʵ����runnable�ӿں�future�ӿڣ�ʵ����get������ȡ�̷߳�����Ϣ��
-        thread ����futureTask�Ϳ��Բ���ִ�С����������ģʽ��
+        callable 接口提供了call方法，
+        futureTask 实现了runnable接口和future接口，实现了get方法获取线程返回消息。
+        thread 传个futureTask就可以并发执行。适配器设计模式。
     threadPool
-    һ��Ӧ�ó��������������ˡ�
+    一般应用场景：跑批、对账。
 
-�̵߳ļ���״̬
- ����
+线程的几种状态
+ 创建
 
- ����
-     �ȴ�  wait
- ����
+ 就绪
+     等待  wait
+ 运行
 
- ����      synchronized
+ 阻塞      synchronized
 
- ����
+ 销毁
 
-�̵߳�ֹͣ
+线程的停止
     interrupt
-���ݰ�ȫ������
-    ��������
-    ���������ǹ�����������class�ļ���ͬһ������ȡ����ڳ�Ա��this���ȣ�����Ǵ������������󲻻�����
+数据安全性问题
+    共享变量
+    锁：锁的是共享变量，如class文件、同一个对象等。对于成员的this锁等，如果是创建了两个对象不会锁。
 
-�������ڴ��еĴ洢
-    �����ص���ǹ����ͻ��⡣�������������Ķ�����Ҫ�Ƕ���̹߳�����������ֻ��һ���߳��ܻ�ȡ����
+对象在内存中的存储
+    锁的特点就是共享和互斥。共享体现在锁的对象需要是多个线程共享，互斥是只有一个线程能获取锁。
 
-    �����֣�����->ƫ����->��������->��������
-
-    ��������Ӱ�����ܡ�
-        synchronized ����Ż��ġ�
+    锁划分：无锁->偏向锁->轻量级锁->重量级锁
+    
+    锁的粒度影响性能。
+        synchronized 如何优化的。
         synchronized(lock){
         }
-        �߳�A���߳�B
-        ���������
-        1.ֻ���߳�Aȥ����ͬ����������ݣ��󲿷���������У�
-            ������ƫ���������洢�߳�A���߳�ID��ƫ������ǡ�
-            �ٴη��ʵ�ʱ��鿴����ͷ���߳�id����������߳�id�Ƿ���ȣ���Ȼ�ȡƫ������
-        2.�߳�A���߳�Bͬʱ����ͬ����������ݡ�
-            �߳�B���ʵ�ʱ���޷���ȡƫ���������ʱ������������������ʹ��������ʽ�����
-        3.����߳�ͬʱ����--����
-        ƫ����
-            CAS �Ƚ�
+        线程A和线程B
+        情况有三种
+        1.只有线程A去访问同步代码块内容（大部分情况是这中）
+            引入了偏向锁，锁存储线程A的线程ID和偏向锁标记。
+            再次访问的时候查看对象头的线程id和锁对象的线程id是否相等，相等获取偏向锁。
+        2.线程A和线程B同时访问同步代码块内容。
+            线程B访问的时候，无法获取偏向锁。这个时候引入了轻量级锁，使用自旋方式解决。
+        3.多个线程同时访问--阻塞
+        偏向锁
+            CAS 比较
+    
+            过程：线程A获取锁，设置偏向锁的线程id偏向锁标记等信息，线程B执行，CAS获取锁，失败，
+            撤销偏向锁，将偏向锁升级为轻量级锁，然后线程继续执行。
+        轻量锁
+            通过自旋，尝试获取锁，循环获取锁开销比线程阻塞的开销小。
+            自旋会不断消耗cpu，在一定自旋次数后，如果还没获取到轻量锁，则会升级为重量锁。
+        重量锁
+            重量锁会阻塞。通过监控实现 monitor
+            阻塞会基于系统级别的线程切换，是用户态到内核态的切换。monitor enter 和monitor exit
+            被阻塞的线程会进入一个阻塞队列，等待线程执行完monitor exit 之后唤醒。唤醒之后再次争抢锁。
+    
+        偏向锁和轻量锁并没有真正意义的锁定某个东西。
+    
+    锁的内存划分
+    对象头mark word
+        锁标记
+        偏向锁标记等
+    实例数据
+    填充
+wait和notify
+wait的两个作用 阻塞并且释放锁，把线程放到等待队列中。
+notify 唤醒等待队列的线程，将其添加到同步队列，只有同步队列的线程才有机会获取锁。
+notify 只是唤醒等待队列的线程，实际执行的时候只有当另外一个线程 monitor exit以后才能获取
+wait会释放锁 sleep不会释放锁。
 
-            ���̣��߳�A��ȡ��������ƫ�������߳�idƫ������ǵ���Ϣ���߳�Bִ�У�CAS��ȡ����ʧ�ܣ�
-            ����ƫ��������ƫ��������Ϊ����������Ȼ���̼߳���ִ�С�
-        ������
-            ͨ�����������Ի�ȡ����ѭ����ȡ���������߳������Ŀ���С��
-            �����᲻������cpu����һ�����������������û��ȡ�����������������Ϊ��������
-        ������
-            ��������������ͨ�����ʵ�� monitor
-            ���������ϵͳ������߳��л������û�̬���ں�̬���л���monitor enter ��monitor exit
-            ���������̻߳����һ���������У��ȴ��߳�ִ����monitor exit ֮���ѡ�����֮���ٴ���������
+volatile关键字
+    保证线程可见性
+    如何保证可见性
+        修改变量的时候会加一个lock指令（基于可见性或者缓存锁达到可见性）
+    可见性到底是什么
+        硬件层面
+        JMM层面
+        硬件层面：核心组件是CPU 内存 IO
+        三者的速度差异很大。
 
-        ƫ��������������û���������������ĳ��������
+        对于cpu的利用优化
+            增加cpu的高速缓存
+            引入进程和线程->线程阻塞，cpu时间片切换，提高效率。
+            指令优化->重排序。
+        由于cpu和主内存之间的处理速度相差比较大，因此，在cpu和内存之间增加了高速的缓存，用以提高效率
+        读取内存数据先把内存数据缓存到cpu高速缓存中，修改的时候，先同步缓存在同步主内存。
+        缓存有三级L1 L2 L3
+        L1和L2是cpu私有的缓存。L3是cpu共有的
+    
+        高速缓存带来的问题就是，缓存一致性的问题。
+        解决：通过加锁解决。
+        cpu 硬件方面：
+        总线锁：只有一个线程能修改内存数据，将并行变为串行，效率不高
+        缓存锁：基于缓存一致性协议的。MESI协议（会带来阻塞问题，cpu之间的通信）。
+        为解决cpu之间通信的阻塞问题，cpu会把修改的值写入到store buffer中,
+        是异步通信，这会造成cpu乱序执行，也就是重排序。
+    
+        cpu软件层面：内存屏障
+        在适当的地方加上内存屏障达到可见性的目的。
+        读屏障、写屏障和全屏障
+    
+        JMM层面
+            导致缓存一致性的根本问题：缓存和重排序
+            通过禁止缓存和重排序达到可见性问题。
+            最核心的价值是解决了有序性和可见性。
+        JMM的规范
+    
+        主内存（线程共享）
+            堆内存
+        工作内存
+            线程先读取工作内存在读取主内存，线程私有
+        JMM通过volatile synchronized final 等方式实现。
+    
+        可见性规则happens-before
+            前一个操作结果对后一个是可见的。
+            每个线程的中的前一个操作对后一个是可见的。
+            volatile关键字，每个写操作对后面的读操作是可见的。
+            传递性，a happens-before b，b happens-before c 那么 a happens-before c
 
-    �����ڴ滮��
-    ����ͷmark word
-        �����
-        ƫ������ǵ�
-    ʵ������
-    ���
-wait��notify
-wait���������� ���������ͷ��������̷߳ŵ��ȴ������С�
-notify ���ѵȴ����е��̣߳��������ӵ�ͬ�����У�ֻ��ͬ�����е��̲߳��л����ȡ����
-notify ֻ�ǻ��ѵȴ����е��̣߳�ʵ��ִ�е�ʱ��ֻ�е�����һ���߳� monitor exit�Ժ���ܻ�ȡ
-wait���ͷ��� sleep�����ͷ�����
 
-volatile�ؼ���
-    ��֤�߳̿ɼ���
-    ��α�֤�ɼ���
-        �޸ı�����ʱ����һ��lockָ����ڿɼ��Ի��߻������ﵽ�ɼ��ԣ�
-    �ɼ��Ե�����ʲô
-        Ӳ������
-        JMM����
-        Ӳ�����棺���������CPU �ڴ� IO
-        ���ߵ��ٶȲ���ܴ�
+​	    
+	总结：
+	    为什么要使用volatile?为解决缓存一致性的原因。
+	    出现一致性的原因是 cpu 内存 之间的传输速度不一样，为充分利用cpu 出现了cpu缓存，
+	    使用缓存后，就出现了数据不一致的问题，cpu层面的解决方式是 加锁，总线锁和缓存锁。
+	    总线锁是不考虑的，因为总线锁将并行改为了串行。
+	    MESI协议，缓存一致性协议
+	    缓存锁的话，又会存在一个多线程通讯的问题，会造成阻塞，因此出现了store buffer cpu将数据写入
+	    store buffer中表示，但是结果可能是乱序的，为解决该问题，cpu提供了指令，就是内存屏障，在适当的地方加上内存屏障保障可见性。
+	    JMM就是解决了可见性和缓存一致性的问题。
+	    可见性的规则就happens-before。
 
-        ����cpu�������Ż�
-            ����cpu�ĸ��ٻ���
-            ������̺��߳�->�߳�������cpuʱ��Ƭ�л������Ч�ʡ�
-            ָ���Ż�->������
-        ����cpu�����ڴ�֮��Ĵ����ٶ����Ƚϴ���ˣ���cpu���ڴ�֮�������˸��ٵĻ��棬�������Ч��
-        ��ȡ�ڴ������Ȱ��ڴ����ݻ��浽cpu���ٻ����У��޸ĵ�ʱ����ͬ��������ͬ�����ڴ档
-        ����������L1 L2 L3
-        L1��L2��cpu˽�еĻ��档L3��cpu���е�
-
-        ���ٻ��������������ǣ�����һ���Ե����⡣
-        �����ͨ�����������
-        cpu Ӳ�����棺
-        ��������ֻ��һ���߳����޸��ڴ����ݣ������б�Ϊ���У�Ч�ʲ���
-        �����������ڻ���һ����Э��ġ�MESIЭ�飨������������⣬cpu֮���ͨ�ţ���
-        Ϊ���cpu֮��ͨ�ŵ��������⣬cpu����޸ĵ�ֵд�뵽store buffer��,
-        ���첽ͨ�ţ�������cpu����ִ�У�Ҳ����������
-
-        cpu�������棺�ڴ�����
-        ���ʵ��ĵط������ڴ����ϴﵽ�ɼ��Ե�Ŀ�ġ�
-        �����ϡ�д���Ϻ�ȫ����
-
-	    JMM����
-	        ���»���һ���Եĸ������⣺�����������
-	        ͨ����ֹ�����������ﵽ�ɼ������⡣
-	        ����ĵļ�ֵ�ǽ���������ԺͿɼ��ԡ�
-	    JMM�Ĺ淶
-
-	    ���ڴ棨�̹߳�����
-            ���ڴ�
-	    �����ڴ�
-	        �߳��ȶ�ȡ�����ڴ��ڶ�ȡ���ڴ棬�߳�˽��
-	    JMMͨ��volatile synchronized final �ȷ�ʽʵ�֡�
-
-	    �ɼ��Թ���happens-before
-	        ǰһ����������Ժ�һ���ǿɼ��ġ�
-	        ÿ���̵߳��е�ǰһ�������Ժ�һ���ǿɼ��ġ�
-	        volatile�ؼ��֣�ÿ��д�����Ժ���Ķ������ǿɼ��ġ�
-	        �����ԣ�a happens-before b��b happens-before c ��ô a happens-before c
-
-	    
-	�ܽ᣺
-	    ΪʲôҪʹ��volatile?Ϊ�������һ���Ե�ԭ��
-	    ����һ���Ե�ԭ���� cpu �ڴ� ֮��Ĵ����ٶȲ�һ����Ϊ�������cpu ������cpu���棬
-	    ʹ�û���󣬾ͳ��������ݲ�һ�µ����⣬cpu����Ľ����ʽ�� �������������ͻ�������
-	    �������ǲ����ǵģ���Ϊ�����������и�Ϊ�˴��С�
-	    MESIЭ�飬����һ����Э��
-	    �������Ļ����ֻ����һ�����߳�ͨѶ�����⣬�������������˳�����store buffer cpu������д��
-	    store buffer�б�ʾ�����ǽ������������ģ�Ϊ��������⣬cpu�ṩ��ָ������ڴ����ϣ����ʵ��ĵط������ڴ����ϱ��Ͽɼ��ԡ�
-	    JMM���ǽ���˿ɼ��Ժͻ���һ���Ե����⡣
-	    �ɼ��ԵĹ����happens-before��
-	
 JUC
-    ������ ������������ģ�һ���̻߳�ȡ�����ٴη������ķ�����ʱ����Ҫ�ٴλ�ȡ��ֻ��Ҫ��¼������
-    ��д�� �ǹ�����
-    ReentrantLock ���뻥������
+    重入锁 锁是允许重入的，一个线程获取锁后，再次访问锁的方法的时候不需要再次获取锁只需要记录次数。
+    读写锁 是共享锁
+    ReentrantLock 重入互斥锁。
 
-AQS--ͬ������ abstract queued synchronizer
-  ������߳̾�������ʱ�������߳���ô�졣����
-  ����
-    ��ռ ֻ����һ���߳�
-    ���� ��д��
-  AQS��ͬ�����У�ά��һ��˫��������ÿ��������һ��node�ڵ㣬���ڲ��и�pre next ��thread id����Ϣ��
-  ���Ļ���Ҫ��
-    ��Ҫһ�����������ݼ�¼����״̬������������������
+AQS--同步工具 abstract queued synchronizer
+  当多个线程竞争锁的时候，其他线程怎么办。阻塞
+  特性
+    独占 只能有一个线程
+    共享 读写锁
+  AQS是同步队列，维护一个双向链表。每个数据是一个node节点，节内部有个pre next 和thread id等信息。
+  锁的基本要素
+    需要一个共享的数据记录锁的状态。（无锁还是有锁）
 	state:
-	�Ȼ�ȡ״̬�����˵ײ��unsafe����
+	先获取状态调用了底层的unsafe方法
 	CAS unsafe.compareAndSwapInt(this, stateOffset, expect, update);
 	
-	AQSԴ�����
-	    AbstractQueuedSynchronizer.java----�����
-	    compare and set state()---->unsafe��ԭ���Բ������Ƚ����ڴ��ַƫ����Ԥ��ֵ�Ƿ�һ��
-	    һ�µĻ���˵�����Ի�ȡ������Ȼ���̻߳�ȡ����
-
-        tryAcquire���� AbstractQueuedSynchronizer.java �ĳ��󷽷����������ģʽ��ģ��ģʽ��
-            ��Ϊ����������Ϊ�˹�ƽ���ͷǹ�ƽ��������ʵ�֡�
-
-	    acquire(1)-->try acquire(1)
-	        �ڳ��Ի�ȡһ����������߳��߳�1 �Ѿ�unlock��ʱ���߳�2 ��ȡ����sate=0
-	        ����߳�1���ٴλ�ȡ�������state��ֵ+1���� ��������
-
-	    ��ȡ��ʧ�ܣ�������ӵ���������
-	    addWaiter(Node.exclusive)-->���ӵ�һ����������
-	        �ѵ�ǰ�̷߳�װ��һ��Node�ڵ�
-	        enq(node) ��ǰ�߳� ����������compareAndSetHead��compareAndSetTail unsafe��ԭ���Բ�����
-
-	    acquireQueued(addWaiter(Node.exclusive))-->������ʽ��ȡ��
-	        ������ʽ��ȡ��
-                shouldParkAfterFailedAcquire()
-                parkAndCheckInterrupt() --�� park()�̹߳��� thread.interrupted()�ж��̲߳��Ҹ�λ��
-                ���̹߳���
-
-        unlock�ͷ���
-            state �ĳ�0  ��������״̬
-	        acquireQueued �����У����ȡ����
-	        ͨ��unParkSuccessor�����߳�
-
+	AQS源码分析
+	    AbstractQueuedSynchronizer.java----抽象的
+	    compare and set state()---->unsafe的原子性操作，比较下内存地址偏移与预期值是否一致
+	    一致的话，说明可以获取到锁。然后线程获取锁。
 	
-Conditional
-    wait ��notifyͨѶ
+	    tryAcquire（） AbstractQueuedSynchronizer.java 的抽象方法，这块的设计模式是模板模式。
+	        因为可重入锁分为了公平锁和非公平锁。各自实现。
+	
+	    acquire(1)-->try acquire(1)
+	        在尝试获取一次锁。如果线程线程1 已经unlock的时候，线程2 获取锁，sate=0
+	        如果线程1，再次获取锁，会对state的值+1，可 重入锁。
+	
+	    获取锁失败，则会添加到阻塞队列
+	    addWaiter(Node.exclusive)-->添加到一个阻塞队列
+	        把当前线程封装成一个Node节点
+	        enq(node) 当前线程 创建链表（compareAndSetHead、compareAndSetTail unsafe的原子性操作）
+	
+	    acquireQueued(addWaiter(Node.exclusive))-->自旋方式获取锁
+	        自旋方式获取锁
+	            shouldParkAfterFailedAcquire()
+	            parkAndCheckInterrupt() --》 park()线程挂起 thread.interrupted()中断线程并且复位】
+	            将线程挂起
+	
+	    unlock释放锁
+	        state 改成0  设置无锁状态
+	        acquireQueued 自旋中，会获取锁。
+	        通过unParkSuccessor唤醒线程
 
-CountDownLatch ʵ���߳�֮��ͬ���ģ������и�������������������Ϊ0ʱ�򣬻�������
-˵���ˣ������һ��դ�������á�ʹ�õ���AQS�����ڲ��ǹ�������
+
+​	
+Conditional
+​    wait 和notify通讯
+
+CountDownLatch 实现线程之间同步的，部内有个计数器，当计数器不为0时候，会阻塞。
+说白了，起的是一个栅栏的作用。使用的是AQS技术内部是共享锁。
 
 
 Semaphore
-    �ź��� ����һ�����߳̽�����߳�����
+    信号量 允许一定量线程进入的线程数。
 
-    ���߳�ͨѶ��һ����͸�һ���¾��У��̰߳�ȫ����Դ�ౣ֤��
-    ���߳�ֻ��֤�����ȡ���Ϳ����ˡ�
+    多线程通讯，一个类就干一个事就行，线程安全由资源类保证。
+    多线程只保证存入和取出就可以了。
