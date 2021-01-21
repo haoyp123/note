@@ -26,6 +26,9 @@
 	Interrupt 线程中断。
 	   一个阻塞状态的线程，在执行线程上调用其中断方法，interrupt 调用会抛出InterruptedException异常，为保证线程
 	   顺利执行会对异常进行捕获，而线程不会中断，保证线程顺利执行。
+	   isInterrupted
+	   sleep 会将interrupted的 interrupt 标识复位。
+	   interrupted 和isInterrupted 都调用了本地方法一个需要擦除一个不擦除标记。
 
 5.多线程的状态
 	创建 就绪 运行 阻塞  死亡
@@ -57,6 +60,7 @@
 2.同步方法是 this锁
 
 3.静态方法上的synchronized 锁是类锁，当前类的class文件
+    synchronized 锁有两个重要指令，monitor entry monitor exit
 
 4.死锁
 	线程之间相互持有对方的锁。
