@@ -36,7 +36,45 @@ major_version 最大版本
 constrant_pool_count 常量池数量
 ~~~
 
+### 
 
+### 类加载机制
+
+class-------》jvm 步骤
+
+1. 装载---------classloader
+
+   1. 找到文件所在位置 磁盘 网络等。。类加载器加载类
+
+      - brootstrap classloader 加载的是 lib/rt.jar里的class文件 
+
+      - extension classloader
+
+      - app classloader  加载classpath下的
+
+      - custome classloader 自定义
+
+        装载机制：双亲委派机制。
+
+   2. 将文件信息交给jvm-------------存放在方法区  类的描述信息
+
+   3. 类文件所对应的对象交给jvm--------堆
+
+2. 链接
+
+   1. 验证---》验证是否正确
+
+   2. 准备--》为类的静态变量分配空间，并初始化为默认值。
+
+      static int a=10; 此时赋值 a=0；
+
+   3. 解析--》将类中的符号引用转为直接引用。
+
+      地址：String str=地址。
+
+3. 初始化
+
+   为静态变量初始化真正的值。此时赋值 a=10;
 
 
 
