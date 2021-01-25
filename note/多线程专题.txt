@@ -61,6 +61,7 @@
 
 3.静态方法上的synchronized 锁是类锁，当前类的class文件
     synchronized 锁有两个重要指令，monitor entry monitor exit
+    monitor entry保证从主内存读取数据，monitor exit 保证执行完毕后写入主内存。
 
 4.死锁
 	线程之间相互持有对方的锁。
