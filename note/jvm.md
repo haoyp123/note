@@ -130,4 +130,23 @@ class-------》jvm 步骤
 
    
 
+5. **gc**
+
+   young  GC 年轻代垃圾回收  minor gc
+
+   old GC 老年代的垃圾回收 major gc 一般 major gc伴随着minor 
+
+   二者加一起就是full gc
+
+   1. 如何确认垃圾
+      - 引用计数法----- 有缺陷 循环引用的问题无法解决。
+      - 可达性分析算法----GC Root
+      - GC Root
+        1. 局部变量表
+        2. static成员
+        3. 常量
+        4. 本地方法栈中的对象
+        5. 类加载器
+        6. 线程
+
    
