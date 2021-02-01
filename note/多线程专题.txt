@@ -71,6 +71,9 @@
 ​	
 多线程通讯
 ​	1.wait 和 notify
+		wait和notify实际操作的是monitor,所以必须在同步方法中使用。
+		wait后，会放弃monitor的所有权并进入wait set中，其他线程有机会争抢monitor。
+		
 ​	2.lock锁
 ​		synchronized---不能手动开锁和解锁
 ​		lock锁需要手动释放，此时，可能出现的问题：释放锁之前的代码如果抛异常，会造成死锁。
