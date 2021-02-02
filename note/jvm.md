@@ -198,5 +198,17 @@ class-------》jvm 步骤
 
    
 
+8. **改变垃圾收集器**
+
+   1. 串行
+      - -XX: +UseSerialGC
+      - -XX: +UseSerialOldGC
+   2. 并行
+      - -XX: +UserPallelGC
+      - -XX: +UsePallelOldGC
+   3. 并发
+      - -XX: +UseG1GC
+      - -XX: +UseConcMarkSweepGC
+
    
 
