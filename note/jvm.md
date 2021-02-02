@@ -198,17 +198,56 @@ class-------》jvm 步骤
 
    
 
-8. **改变垃圾收集器**
+8. **JVM参数**
 
-   1. 串行
-      - -XX: +UseSerialGC
-      - -XX: +UseSerialOldGC
-   2. 并行
-      - -XX: +UserPallelGC
-      - -XX: +UsePallelOldGC
-   3. 并发
-      - -XX: +UseG1GC
-      - -XX: +UseConcMarkSweepGC
+   1. 标准参数
 
+      不随jdk版本变化而变化，比如 java -version 、java -help
+
+   2. -X参数
+
+      非标准参数，随jdk版本变动而变动，比如Java HotSpot(TM) 64-Bit Server VM (build 25.271-b09, mixed mode) 
+
+      jvm 的模式 为混合模式，解释模式和编译模式，通过-X可以设置。
    
+      java -Xint -version 设置为解释模式 Java HotSpot(TM) 64-Bit Server VM (build 25.271-b09, interpreted mode)
+   
+      java -Xcomp -version 设置为编译模式 Java HotSpot(TM) 64-Bit Server VM (build 25.271-b09, compiled mode)
+   
+      java -Xmixed -version 设置为混合模式 Java HotSpot(TM) 64-Bit Server VM (build 25.271-b09, mixed mode)
+   
+   3. -XX参数
+
+      1. 垃圾回收
+
+         1. Boolean 类型 +/- 启用关闭类型
+            1. 串行
+               - -XX: +UseSerialGC
+               - -XX: +UseSerialOldGC
+            2. 并行
+               - -XX: +UserPallelGC
+               - -XX: +UsePallelOldGC
+            3. 并发
+               - -XX: +UseG1GC
+               - -XX: +UseConcMarkSweepGC
+         2. 非Boolean 类型 name=value类型
+            1. 设置最大堆内存 -XX:MaxHeapSize=100M
+            2. 新老年代比例 NewRatio 2 新老比例为1：2
+   
+   4. 其他参数
+   
+      1. -Xms100M==> -XX:InitalHeapSize=100M 初始化堆内存
+      2. -Xmx100M==>-XX:MaxHeapSize=100M最大堆内存
+      3. -Xss100k===>-XX:ThreadStackSize=100k栈深度
+      
+   5. 查看所有的参数
+   
+      1. -XX:+PrintFlagsFinal
+      
+   6. 修改参数
+   
+      1. idea中修改
+      2. java -XX:+UseG1GC -xxx.jar 
+      3. tomcat 修改配置
+      4. 实时修改 jinfo
 
