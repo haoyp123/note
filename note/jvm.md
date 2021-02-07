@@ -209,13 +209,13 @@ class-------》jvm 步骤
       非标准参数，随jdk版本变动而变动，比如Java HotSpot(TM) 64-Bit Server VM (build 25.271-b09, mixed mode) 
 
       jvm 的模式 为混合模式，解释模式和编译模式，通过-X可以设置。
-   
+
       java -Xint -version 设置为解释模式 Java HotSpot(TM) 64-Bit Server VM (build 25.271-b09, interpreted mode)
-   
+
       java -Xcomp -version 设置为编译模式 Java HotSpot(TM) 64-Bit Server VM (build 25.271-b09, compiled mode)
-   
+
       java -Xmixed -version 设置为混合模式 Java HotSpot(TM) 64-Bit Server VM (build 25.271-b09, mixed mode)
-   
+
    3. -XX参数
 
       1. 垃圾回收
@@ -233,21 +233,56 @@ class-------》jvm 步骤
          2. 非Boolean 类型 name=value类型
             1. 设置最大堆内存 -XX:MaxHeapSize=100M
             2. 新老年代比例 NewRatio 2 新老比例为1：2
-   
+            3. 发生oom的时候dump一个文件  -XX: +HeapDumpOnOutOfMemoryError -xx:HeapDumpPath=heap.hprof
+
    4. 其他参数
-   
+
       1. -Xms100M==> -XX:InitalHeapSize=100M 初始化堆内存
       2. -Xmx100M==>-XX:MaxHeapSize=100M最大堆内存
       3. -Xss100k===>-XX:ThreadStackSize=100k栈深度
       
    5. 查看所有的参数
-   
+
       1. -XX:+PrintFlagsFinal
       
    6. 修改参数
-   
+
       1. idea中修改
       2. java -XX:+UseG1GC -xxx.jar 
       3. tomcat 修改配置
-      4. 实时修改 jinfo
+      4. 实时修改 jinfo flag name=value  条件是 manageable类型的值
+      5. jstat 查看信息的 jstat  进程id -class/gc 1000 10 每个1秒打印1次内存信息或者垃圾回收信息
+      6. jstack 进程id 查看线程信息
+      7. jmap -heap 进程id 查看堆内存信息 。将堆内存快照 dump成文件。jmap -dump:format=b,file=heap.hprof pid
+      
+   7. 工具
 
+      1. jconsole
+      2. arthas
+
+   8. 调优目标
+
+      1. 堆内存---》oom 通过工具分析
+
+         通过MAT工具分析
+
+      2. 垃圾回收
+
+         通过日志分析
+
+      3. 什么时候发生垃圾回收
+
+         1. minor gc 年轻代或者s区空间不足的时候
+         2. major gc 老年代空间不足
+         3. -XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:gc.log
+         4. gc查看工具 gc viewer。
+
+   9. 优化
+
+      1. 调整堆大小 ---》会减少回收次数，但是回收时长会拉伸。因为每次回收垃圾增多。
+
+         使用G1GC 设置最长暂停时间。出现没有回收完的情况，会增加回收次数。通过不断调整时间，优化吞吐量和gc耗时。
+         
+      2. G1GC调休
+      
+         1. 尽量不调整年轻代大小，不调整比例。
