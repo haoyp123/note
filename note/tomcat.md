@@ -50,4 +50,7 @@ public interface Servlet{
               }
       ~~~
 
-   2. 为
+   2. 核心组件
+   
+      1. connector
+      2. container
