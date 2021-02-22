@@ -310,3 +310,12 @@ Semaphore
 
     多线程通讯，一个类就干一个事就行，线程安全由资源类保证。
     多线程只保证存入和取出就可以了。
+
+线程池
+    public ThreadPoolExecutor(int corePoolSize,-- 核心线程数
+                              int maximumPoolSize,--最大线程数
+                              long keepAliveTime,--空闲时间
+                              TimeUnit unit,--时间单位
+                              BlockingQueue<Runnable> workQueue,--阻塞队列
+                              ThreadFactory threadFactory,--线程工程
+                              RejectedExecutionHandler handler)--拒绝策略
