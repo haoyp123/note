@@ -12,15 +12,7 @@
 
    ~~~java
    //通过服务ID获取实例信息	
-   public List<ServiceInstance> getInstances(String serviceId) {
-   		List<InstanceInfo> infos = this.eurekaClient.getInstancesByVipAddress(serviceId,
-   				false);
-   		List<ServiceInstance> instances = new ArrayList<>();
-   		for (InstanceInfo info : infos) {
-   			instances.add(new EurekaServiceInstance(info));
-   		}
-   		return instances;
-   	}	
+
    ~~~
 
    1.  DiscoveryCilent
