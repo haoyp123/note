@@ -1,0 +1,140 @@
+发展历史
+    架构：单体架构--》一个war包部署到tomcat
+    问题：用户量增加--》服务器性能出现瓶颈，主要是问题是提高并行处理能力
+
+    集群：用户--》nginx -->tomcat集群  （同一个war包，部署在不同的机器）
+    问题：业务复杂度增加，维护困难
+
+    --》垂直拆分,拆分为不同模块，用户 客户 产品 等
+
+    --》粒度更细致。
+    SOA 关注的是复用性。会有ESB协议
+
+    SOA和微服务的区别？
+        SOA 关注重用。微服务关注解耦，降低业务耦合度，更细粒度的模块。
+        微服务更多的使用的是restful
+        devops运维一体化。
+        微服务是服务化思想的实践方法。
+
+微服务的开发
+    spring cloud（eureka feign ribbon hystrix ）
+    spring cloud 是围绕springboot的做的。
+    需要解决的问题。
+        1.负载均衡
+        2.服务的治理（注册发现）
+        3.服务的稳定的（限流和熔断）
+        4.服务的链路追踪
+
+网关
+    可以做前置后置的处理，黑白名单、限流、灰度、鉴权。
+eureka
+    做服务的注册发现。服务化以后需要对维护调用地址，毕竟麻烦，出现了eureka，将服务注册到eureka上，直接取就可以。
+
+ribbon 做负载均衡。
+
+hystrix 熔断 限流
+
+configuration配置中心
+
+spring cloud stream
+
+zipkin/sleuth
+
+
+微服务如何解决事务？
+
+
+
+
+spring boot
+简化了开发，约定优于配置
+    1.maven结构
+    2.spring-boot-start-web 内置tomcat、template
+@SpringBootApplication注解
+    @configuration
+        基于注解的方式对bean的管理 表示的是这个类是配置类
+
+    @EnableAutoConfiguration
+        @AutoConfigurationPackage
+        @Import(AutoConfigurationImportSelector.class)--对其他配置信息的导入
+
+        AutoConfigurationImportSelector
+        AutoConfigurationPackages.Registrar
+        动态加载
+        importSelector
+        importBeanDefinitionRegister
+        实现importSelector接口可以导入bean 也可以通过注解模式通过注解实现
+        @Retention(RetentionPolicy.RUNTIME)
+        @Import(CacheSelector.class)
+        public @interface CacheInterface {
+        }
+        这样使用@cacheInterface注解就可以使用了
+
+
+    springboot的自动加载
+        AutoConfigurationMetaData路径：
+        META-INF/spring-autoconfigure-metadata.properties
+        SPI技术：扩展点。resource/META-INFO/spring.factories
+
+        spring-autoconfigure-metadata.properties 这个文件是元数据
+        com.study.config.StudyConfiguration.ConditionalOnClass=com.study.webdemo.configuration.TestClass
+        只有有这个条件的时候才加载
+
+
+    @ComponentScan
+        扫包，交由容器托管
+
+
+    自定义stater
+    命名规则 xxx-spring-boot-start
+    注入properties文件
+    @EnableConfigurationProperties(HelloProperties.class)
+    注入java
+    @Configuration
+
+服务的注册发现
+    为什么要注册发现服务组件？服务地址的维护，地址的动态感知，一个服务宕机以后如何剔除。
+    zookeeper 分布式一致性问题。一个请求，在所有节点达到一致。
+        zookeeper是分布式协调工具，协调的是服务内部如何按规则运行。
+        集群分为有master的集群和没有master的集群，一般有比较好。事务的操作从master节点，事务的同步从主节点同步。
+        zk数据同步、主从算法。
+        选举算法。
+        zk的设计思想
+            1.防止单点故障。
+            2.数据同步。数据同步是改进的2pc（第一阶段是leader节点发起投票，salver节点返回ack，第二阶段是提交），过半节点返回成功即可。
+            3.leader选举。
+    使用
+        创建节点要带上全路径
+        创建顺序节点 分布式ID
+        临时节点
+        节点删除也需要一层一层的删除，从内层删除。
+    节点特性：
+        持久节点、临时节点、临时节点不能存在子节点、顺序节点、同一父节点下不能有相同的名称
+    终端基本操作
+    ls /data 查询
+    get /data  获取值
+
+    java对zookeeper的访问
+        zkClient 和curator
+        权限设置ACL
+
+    节点监听watcher
+        可以对各个节点进行监听，也是作为注册中心对服务动态感知的原因。
+
+    节点选举
+        leader latch
+            每个节点在zk服务器上创建临时节点，最小的节点是master。
+            其他节点监听上一个节点。
+
+        leader selector
+
+    手写注册中心
+        1.zookeeper 写一个register方法
+        2.绑定地址
+        3.客户端添加一个注解，有注解的时候扫发送请求到注册中心。
+
+    手写分布式锁
+        1.tryLock 获取锁
+        2.检查锁
+        3.释放锁
+        4.实现方式
