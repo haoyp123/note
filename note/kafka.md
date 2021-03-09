@@ -78,4 +78,4 @@
 
    1. customer 采用自动拉取的模式。拉取模式的缺点是需要简历一个长连接不断的轮询是否有新的数据需要拉取。kafka采取的解决方式是传一个时间，如果kafka没有拉取到数据后，经过一段时间在拉取。
    2. 分配策略。kafka的消费者组中有多个消费者，一个topic有多个分区，必然涉及partition的分配。一种分配是roundRobin轮询，一种是range范围。同一个消费者组里的消费者不能同时消费同一个分区。
-
+   3. offset的保存。consumer 默认将offset保存在 名为_comsumer_offsets的主题中。
