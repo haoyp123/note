@@ -24,7 +24,7 @@
       1. broker--集群中每个kafka就可以简单理解为一个broker
          - broker中有不同的topic。topic对消息进行分类。
          - partition--提高负载均衡能力。集群中同一个主题在不同的机器中。
-         - leader--针对的是当前分区的leader。follow起到的是备份的作用。
+         - leader--针对的是当前分区的leader。follower起到的是备份的作用。
    
 3. **kafka的工作流程和文件存储机制**
 
@@ -79,3 +79,14 @@
    1. customer 采用自动拉取的模式。拉取模式的缺点是需要简历一个长连接不断的轮询是否有新的数据需要拉取。kafka采取的解决方式是传一个时间，如果kafka没有拉取到数据后，经过一段时间在拉取。
    2. 分配策略。kafka的消费者组中有多个消费者，一个topic有多个分区，必然涉及partition的分配。一种分配是roundRobin轮询，一种是range范围。同一个消费者组里的消费者不能同时消费同一个分区。
    3. offset的保存。consumer 默认将offset保存在 名为_comsumer_offsets的主题中。
+   4. kafka高效读写。原因是1.顺序写入，2.零复制技术。
+   
+5. **kafka事务**
+
+   1. 为了实现跨会话事务，kakka有个全局唯一id。并将pid和transactionID进行绑定
+
+6. **消息发送流程**
+
+   1. 消息发送是异步，ack保证的是数据不丢失，不是同步异步的问题。涉及两个线程 main线程和sender线程。
+   2. sender（productRecoder） 拦截器 序列化器 分区器
+
