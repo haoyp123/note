@@ -135,12 +135,16 @@ ht hashtable
       - appendfsync always  实时
       - appendfsync no 不同步
 
-   2. rewrite 同一样的操作指令只记录一次。bgrewriteaof
+   2. rewrite 同一样的操作指令只记录一次。为防止文件过大，回复时间过长，aof采取bg rewrite aof
+
+      通过设置rewrite-percentage 和rewriete-max-size可以设置重写的大小。
+
+      比如percent=100 max-size=64M说明 aof文件64M并且比上一次重写大了1倍的时候触发。
 
       在重写的时候新接受到的指令会存储到一个缓存中，重写完毕后追加到aof。
-
+   
    3. rewrite触发时间
-
+   
       1. 达到上次重写文件的100%
       2. 达到设置的大小 默认64M
       
@@ -241,3 +245,5 @@ redis事务是放在队列中的，按顺序执行。
 1. 雪崩，同一时间大量key失效。 通过随机数解决，预热更新，对于即将过期的key 
 2. 缓存穿透。限流、缓存一个特殊值。布隆过滤或者缓存空对象。
    - ​	布隆过滤器：位图+hash函数+位运算存到位图。位图只有0和1 1存在0不存在。
+
+#### 5.redis幂等性问题
