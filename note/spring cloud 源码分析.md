@@ -15,7 +15,7 @@
 
    ~~~
 
-   1.  DiscoveryCilent
+   1.  DiscoveryClient
 
       1. 实现了eurekaClient接口，而eurekaClient继承了lookupService接口。
 
