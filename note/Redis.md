@@ -129,10 +129,12 @@ ht hashtable
 
 2. aof append to file 存储的是指令
 
-   1. 设置记录时间
+   aof 采用的是独立日志记录写的命令。
 
+   1. 设置记录时间
+   
       - appendfsync everysec 每一秒
-      - appendfsync always  实时
+   - appendfsync always  实时
       - appendfsync no 不同步
 
    2. rewrite 同一样的操作指令只记录一次。为防止文件过大，回复时间过长，aof采取bg rewrite aof
@@ -140,8 +142,13 @@ ht hashtable
       通过设置rewrite-percentage 和rewriete-max-size可以设置重写的大小。
 
       比如percent=100 max-size=64M说明 aof文件64M并且比上一次重写大了1倍的时候触发。
-
+   
       在重写的时候新接受到的指令会存储到一个缓存中，重写完毕后追加到aof。
+   
+      - 对于过期的数据不在重写到aof
+      - 重写前的aof的无效命令不在保留到aof文件，只保留最终数据的执行命令。
+      - 多条命令合并执行。如 incr count incr count incr count  --》set count 3
+      - 为防止单次重写过大造成缓冲区溢出，会对list set 等集合操作命令做拆分。
    
    3. rewrite触发时间
    
@@ -149,6 +156,20 @@ ht hashtable
       2. 达到设置的大小 默认64M
       
    4. rdb和aof同时开启的时候会优先从aof恢复。
+   
+   5. 主从同步复制
+   
+      1. 从服务发起sync命令。
+      2. 主服务器开启bgsave，并使用缓冲区记录快照后写的命令。
+      3. bgsave完成后，将形成的快照发送给从服务器。
+      4. 快照发送后，开始同步缓冲区中的数据。
+      5. 缓冲区同步完后，主服务器每接收一条写的命令后，都同步给从服务器。
+   
+3. 混合持久化 aof‐use‐rdb‐preamble yes 
+
+   1. 开启混合模式后，aof重写会将这一刻之前的数据生成rdb快照，并且将增量的aof写命令一起写到文件中。
+
+      这样重启后会先加载rdb内容，在加载增量的aof命令。
 
 #### 4.redis的高级
 
@@ -247,3 +268,17 @@ redis事务是放在队列中的，按顺序执行。
    - ​	布隆过滤器：位图+hash函数+位运算存到位图。位图只有0和1 1存在0不存在。
 
 #### 5.redis幂等性问题
+
+
+
+#### 6.redis sentinel 哨兵机制
+
+1. redis sentinel 配合复制机制 可以对下线的主服务器进行故障转移。
+
+2. redis sentinel 是运行在特殊模式下的redis服务器。redis sentinel 监控的是主服务器和主服务器下的从服务器
+
+   通过向主服务器发送subscribe和publish命令来，并向主服务器发送ping命令，sentienl可以识别可用的服务器和
+
+   其他的sentinel。当主服务器挂掉后，sentinel会基于共享信息选出一个sentinel，并从从服务器中选出一个主服务器，其他
+
+   服务器复制新的主服务器。
