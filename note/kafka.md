@@ -96,4 +96,17 @@
 
 **kafka的实现原理**
 
-1. 应用
+1. 异步
+
+   ~~~java
+   properties.put(ProducerConfig.BATCH_SIZE_CONFIG,value);--批量大小
+   properties.put(ProducerConfig.LINGER_MS_CONFIG,value);--间隔时间
+   ~~~
+
+   kafka异步是批量发送，数据达到一定大小的时候是异步发送。linger_ms 发送时间的间隔，都配置满足一个就行。
+
+2. auto_commit AUTO_COMMIT_INTERVAL_MS_CONFIG 自动提交，批量确认。
+
+3. auto_offset AUTO_OFFSET_RESET_CONFIG 消费位置
+
+   
