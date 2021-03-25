@@ -109,4 +109,8 @@
 
 3. auto_offset AUTO_OFFSET_RESET_CONFIG 消费位置
 
-   
+4. 消费者同一个groupId 多个group 如何消费消息，保证只有一个消费者消费掉。
+
+5. 一个topic中数据量过大，如何解决？千亿，万亿级别。
+
+   1. 分区。partition。根据算法分区。随机、轮询。
