@@ -180,4 +180,13 @@
          1. offset在server端维护。
          2. 消费者组消费的偏移量数据存储在磁盘_consumer_offset_xx.算法是 group_id hash %50。
          3. 消费者重复消费消息主要是因为提交时间间隔。可以改成手动提交。
-
+      
+      6. 副本 replication
+      
+         1. leader 和follow
+         
+         2. 副本的同步机制。
+         
+            follow 副本发起sync
+         
+            ISR-->和leader副本集合差不多的副本集合。如果当前时间和副本同步时间相差过大的话，副本会在ISR中被踢掉。
