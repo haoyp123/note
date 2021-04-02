@@ -190,3 +190,19 @@
             follow 副本发起sync
          
             ISR-->和leader副本集合差不多的副本集合。如果当前时间和副本同步时间相差过大的话，副本会在ISR中被踢掉。
+            
+            （in synchronizated replicatio）
+            
+         3. ISR节点保留的是处理性能比较好的节点，follow挂掉或者延迟过大的时候就会剔除。
+         
+            1. 消息如何传播
+            2. 在向生产者返回之前需要保证多少个副本同步
+            3. 名词.HW 高水位（消费者近可见的消息，副本已经同步完成，数据一致） LEO log end offset（每个副本中最后一条消息） 
+            4. 更新过程
+               1. follower 发起fatch请求。
+               2. leader 读取log日志，更新remote leo，更新hw，把内容和当前分区的hw发送给follower
+               3. follower写日志更新本地的leo，不会更新hw（取的是本地的leo和返回的hw取较小的值。）
+               4. follower 发起ack 给leader，leader更新hw，将信息返回给follower ，follower更新hw。过程是两次轮询。
+            5. ack。发送端请求是否发送到了broker上。0不不需要确认，数据丢失 风险大；1 只要leader副本返回。-1 需要ISR中所有副本确认。
+            6. 数据丢失发生的地方在哪里。
+               1. leader通知follower修改hw的时候 follower挂掉了，follower重启后重新同步数据的时候leader挂掉了，follower变更了leader导致数据丢失了。情况特殊只有一个副本且ack是-1的时候。
