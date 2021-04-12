@@ -206,3 +206,5 @@
             5. ack。发送端请求是否发送到了broker上。0不不需要确认，数据丢失 风险大；1 只要leader副本返回。-1 需要ISR中所有副本确认。
             6. 数据丢失发生的地方在哪里。
                1. leader通知follower修改hw的时候 follower挂掉了，follower重启后重新同步数据的时候leader挂掉了，follower变更了leader导致数据丢失了。情况特殊只有一个副本且ack是-1的时候。
+               2. leader epoch。offset for leader epoch request。
+            7. 数据的持久化。
