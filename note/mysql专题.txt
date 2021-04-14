@@ -267,3 +267,27 @@ mysql 优化
 
 ​	写的记录会先记录的redolog buffer 并更新buffer pool 此时算完成了。
 
+--buffer  pool
+
+更新数据的页的时候，已经加载如缓冲池，直接更新就好。不在buffer pool的时候至少发生一次io。
+
+--change buffer
+
+更新的数据不是唯一索引，不需要与磁盘对比重复判断，可以将修改记录直接记录在change buffer 。
+
+--log buffer
+
+是redo log对应的内存区域。先写入log buffer 在写入redo log。
+
+redo log 记录的是数据页的改动。
+
+bin log 记录的是操作事件。可以做主从。
+
+
+
+更新操作流程
+
+先将信息加载出来，然后写入到内存，然后记录到 redo log 标记为 prepare状态，server层在写入bin log  ，然后
+
+commit阶段。
+
