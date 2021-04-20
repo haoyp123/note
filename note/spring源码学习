@@ -6,7 +6,7 @@ AOP 面向切面编程， 找出有规律的代码，抽取出来，运行时在
 
 IOC 将对象的控制权限交给spring进行管理。
 
-DI spring不仅能胡藏剑对象，还能保存对象和对象的关系，实现自动赋值。主要有三种方法，一种是属性，一种是构造函数
+DI spring不仅能创建对象，还能保存对象和对象的关系，实现自动赋值。主要有三种方法，一种是属性，一种是构造函数
 
 AOP
     aspect(切面) 通常是一个类，里边定义了切入点和通知。
@@ -40,7 +40,7 @@ spring 简化了开发
         doDispatcher 进行请求转发
 
     request.getParameterMap()返回对象是Map<String,String[]> 因为checkbox等是一个name对应多个value的
-
+    
     handlerMapping的主要功能就是做映射。url和method
 
 ------------------
@@ -50,27 +50,27 @@ spring 简化了开发
 
     依赖注入
     DI,将对象中需要的属性等由主动寻找，转为被动注入，在初始化的时候注入对象的关系。
-
+    
     spring中对象与对象的关系文件存储位置在哪
         xml/properties等 位置 classpath /network /filesystem
     如何统一配置文件标准
         beanDefinition--文件的定义标准
     如何对不同的文件进行解析?
         采用策略模式。
-
+    
     IOC的结构
     beanFactory
     autowireCapableBeanFactory 自动注入工厂  listableBeanFactory 集合属性的工厂 hierarchicalBeanFactory 继承的工厂
-
+    
     configurableListableBeanFactory
-
+    
     defaultListableBeanFactory 实现类，最顶层的实现类。基本功能都有了。
-
+    
     比较重要的
     beanFactory
     defaultListableBeanFactory
     beadDefinitionReader
-
+    
     IOC的初始化
     定位
     就是对资源的定位和解析。容器不仅实现类listableBeanFactory也继承了DefaultResourceLoader资源加载器。
@@ -93,7 +93,7 @@ Ioc的加载流程简述
 
     Ioc容器不仅实现了BeanFactory接口也实现了resourceLoader接口
     通过DefaultResourceLoader完成对资源的加载定位。
-
+    
     Ioc的初始化 是从refresh()方法开始的。
 依赖注入
     IOC
@@ -102,7 +102,7 @@ Ioc的加载流程简述
 
     初始化（beanDefinition）
     SimpleInstantiationStrategy
-
+    
     依赖注入
     AbstractPropertiesAccessor----》注入动作实现
 
