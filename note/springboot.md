@@ -28,16 +28,42 @@ public class SpringbootStudyApplication {
 
 ##### 5.springboot启动源码分析
 
-1. 启动run方法，创建一个springbootApplication 对象。
+1. 创建一个springApplicationd对象
 
-   ```java
-   
-       
-   	
-       
-   ```
-   
-2. 
+2. 创建SpringApplication主要步骤
+
+   1. 加载资源。默认值为null。
+
+   2. 将主类存放到LinkedHashSet。
+
+   3. 设置容器类型。
+
+   4. 通过java SPI机制加载所有的MATA-INFO/spring.factories 文件。
+
+      ~~~
+      SpringFactoriesLoader-->主要是加载文件的
+      	loadSpringFactories--> 扫描java包加载MATA-INFO/spring.factories下。
+      	
+      ~~~
+
+      
+
+      
+
+   5. 实例化 ApplicationContextInitializer类。
+
+      ~~~java
+      SpringApplication-->实例化对象
+          getSpringFactoriesInstance-->通过反射机制创建 ApplicationContextInitializer的实例。
+      ~~~
+
+      
+
+   6. 实例化监听器。
+
+   7. 创建主类
+
+      具体构造函数如下
 
    ~~~java
    	public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySources) {
@@ -61,14 +87,6 @@ public class SpringbootStudyApplication {
    		this.mainApplicationClass = deduceMainApplicationClass(); 
    		创建主方法所在类
    	}
-   
-   主要方法：getSpringFactoriesInstances()-->loadSpringFactories();加载所有的spring.factories.
-   
-       实例化ApplicationContextInitializer下的类信息
-       	createSpringFactoriesInstances()通过反射实例化对象
-       实例化ApplicationListener监听器
-      		
-       实例化主类。
    
    ~~~
 
@@ -137,6 +155,52 @@ public class SpringbootStudyApplication {
 ```
 
 
+
+##### 6. run方法
+
+创建完springbootApplication后会执行run 方法。
+
+~~~java
+	public ConfigurableApplicationContext run(String... args) {
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start(); //设置启动实际
+		DefaultBootstrapContext bootstrapContext = createBootstrapContext();//创建上下文。
+		ConfigurableApplicationContext context = null;
+		configureHeadlessProperty();//设置系统变量
+		SpringApplicationRunListeners listeners = getRunListeners(args);
+		listeners.starting(bootstrapContext, this.mainApplicationClass);//观察者模式
+		try {
+			ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);//设置参数
+			ConfigurableEnvironment environment = prepareEnvironment(listeners, bootstrapContext, applicationArguments);设置环境变量
+			configureIgnoreBeanInfo(environment);
+			Banner printedBanner = printBanner(environment); //打印banner
+			context = createApplicationContext();//创建上下文
+			context.setApplicationStartup(this.applicationStartup);
+			prepareContext(bootstrapContext, context, environment, listeners, applicationArguments, printedBanner);//准备上下文
+			refreshContext(context);
+			afterRefresh(context, applicationArguments);
+			stopWatch.stop();
+			if (this.logStartupInfo) {
+				new StartupInfoLogger(this.mainApplicationClass).logStarted(getApplicationLog(), stopWatch);
+			}
+			listeners.started(context);
+			callRunners(context, applicationArguments);
+		}
+		catch (Throwable ex) {
+			handleRunFailure(context, ex, listeners);
+			throw new IllegalStateException(ex);
+		}
+
+		try {
+			listeners.running(context);
+		}
+		catch (Throwable ex) {
+			handleRunFailure(context, ex, null);
+			throw new IllegalStateException(ex);
+		}
+		return context;
+	}
+~~~
 
 
 
