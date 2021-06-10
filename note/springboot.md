@@ -135,30 +135,24 @@ public class SpringbootStudyApplication {
 
 4. 实例化完springbootApplication后，调用run方法。
 
-
-
-
-
-##### 5.springboot的自动注入原理
-
-```java
-1.@SpringBootApplication
-2.@EnableAutoConfiguration
-    该注解有import方法 导入了AutoConfigurationImportSelector.class
-@Import注解是用来导入配置类或者一些需要前置加载的类.这些类需要有@configuration 或者实现importSelector 或者实现
-    importBeanDefinitionRegister
-3.AutoConfigurationImportSelector
-        1.getAutoConfigurationEntry-->
-        List<String> configurations = getCandidateConfigurations(annotationMetadata, attributes);--获取所有的加载信息 通过SpringFactoriesLoader
-        
-使用类加载器加载所有FACTORIES_RESOURCE_LOCATION(META-INF/spring.factories)的信息保存在缓存中。
-```
-
-
-
 ##### 6. run方法
 
 创建完springbootApplication后会执行run 方法。
+
+1. 创建计时器
+2. 开启计时器
+3. 创建上下文
+4. 设置系统变量
+5. 获取监听器
+6. 开始监听
+7. 设置参数
+8. 准备环境
+9. 设置忽略的bean信息
+10. 准备上线问
+11. 刷新上下文
+12. 刷新后其他工作
+13. 计时结束
+14. 开始对上下文的监听
 
 ~~~java
 	public ConfigurableApplicationContext run(String... args) {
