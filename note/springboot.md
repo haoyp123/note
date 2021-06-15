@@ -140,15 +140,14 @@ public class SpringbootStudyApplication {
 创建完springbootApplication后会执行run 方法。
 
 1. 创建计时器
-2. 开启计时器
-3. 创建上下文
+2. 开启计时器awt
 4. 设置系统变量
 5. 获取监听器
 6. 开始监听
 7. 设置参数
 8. 准备环境
 9. 设置忽略的bean信息
-10. 准备上线问
+10. 准备上下文prepareContext
 11. 刷新上下文
 12. 刷新后其他工作
 13. 计时结束
@@ -161,17 +160,17 @@ public class SpringbootStudyApplication {
 		DefaultBootstrapContext bootstrapContext = createBootstrapContext();//创建上下文。
 		ConfigurableApplicationContext context = null;
 		configureHeadlessProperty();//设置系统变量
-		SpringApplicationRunListeners listeners = getRunListeners(args);
+		SpringApplicationRunListeners listeners = getRunListeners(args);//注册监听器
 		listeners.starting(bootstrapContext, this.mainApplicationClass);//观察者模式
 		try {
-			ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);//设置参数
-			ConfigurableEnvironment environment = prepareEnvironment(listeners, bootstrapContext, applicationArguments);设置环境变量
+			ApplicationArguments applicationArguments = new DefaultApplicationArguments(args);//设置命令行参数
+			ConfigurableEnvironment environment = prepareEnvironment(listeners, bootstrapContext, applicationArguments);//准备上下文环境变量
 			configureIgnoreBeanInfo(environment);
 			Banner printedBanner = printBanner(environment); //打印banner
-			context = createApplicationContext();//创建上下文
+			context = createApplicationContext();//创建上下文ConfigurableApplicationContext
 			context.setApplicationStartup(this.applicationStartup);
 			prepareContext(bootstrapContext, context, environment, listeners, applicationArguments, printedBanner);//准备上下文
-			refreshContext(context);
+			refreshContext(context);//关键操作
 			afterRefresh(context, applicationArguments);
 			stopWatch.stop();
 			if (this.logStartupInfo) {
@@ -197,4 +196,22 @@ public class SpringbootStudyApplication {
 ~~~
 
 
+
+##### 7.自动装备过程简述
+
+1. @springApplication -->@enableAutoConfiguration-->@import() AutoConfigurationImportSelector.
+
+2. getCondidateConfigurations()-->EnableAutoConfiguration 下所有的类。springFactorisLoader
+
+   上述为简单的自动装配原理
+
+3. 深入理解
+
+   主类是什么时候注入的？springApplication是什么时候扫描的？
+
+   ```java
+   run()--> prepareContext()
+       load()-->beanDefinitionLoader() 加载springApplication主类(com.study.SpringbootStudyApplication)
+       
+   ```
 
