@@ -207,11 +207,86 @@ public class SpringbootStudyApplication {
 
 3. 深入理解
 
-   主类是什么时候注入的？springApplication是什么时候扫描的？
+   1. 主类是什么时候注入的？springApplication是什么时候扫描的？
 
-   ```java
-   run()--> prepareContext()
-       load()-->beanDefinitionLoader() 加载springApplication主类(com.study.SpringbootStudyApplication)
-       
-   ```
+      ```java
+      run()--> prepareContext()
+         SpringApplication
+          	load()-->beanDefinitionLoader() 加载springApplication主类(com.study.SpringbootStudyApplication)
+          
+      ```
+
+   ​     刷新上下文的时候扫描和加载场景 这块是调用的是spring的refresh（）方法。
+
+##### 8.tomcat加载简述
+
+1. webServer的创建
+
+   ~~~
+   refreshContext()-->servletWebApplictionContext onRefresh()--> createWebServer()
+   	
+   ~~~
+
+   
+
+2. createWebServer
+
+   ~~~java
+   
+    
+   ServletWebApplicationContext.java
+   	@Override
+   	protected void onRefresh() {
+   		super.onRefresh();
+   		try {
+   			createWebServer();
+   		}
+   		catch (Throwable ex) {
+   			throw new ApplicationContextException("Unable to start web server", ex);
+   		}
+   	}
+   
+   private void createWebServer() {
+   		WebServer webServer = this.webServer;
+   		ServletContext servletContext = getServletContext();
+   		if (webServer == null && servletContext == null) {
+   			StartupStep createWebServer = this.getApplicationStartup().start("spring.boot.webserver.create");
+   			ServletWebServerFactory factory = getWebServerFactory();
+               //获取一个ServletWebServerFactory类型的工厂 tomcat jetty 等。
+   			createWebServer.tag("factory", factory.getClass().toString());
+   			this.webServer = factory.getWebServer(getSelfInitializer());//调用tomcat Api设置webserver
+               //通过创建一个TomcatWebServer后再构造函数中调用了initialize()，该方法完成了tomcat的启动
+   			createWebServer.end();
+   			getBeanFactory().registerSingleton("webServerGracefulShutdown",
+   					new WebServerGracefulShutdownLifecycle(this.webServer));
+   			getBeanFactory().registerSingleton("webServerStartStop",
+   					new WebServerStartStopLifecycle(this, this.webServer));
+   		}
+   		else if (servletContext != null) {
+   			try {
+   				getSelfInitializer().onStartup(servletContext);
+   			}
+   			catch (ServletException ex) {
+   				throw new ApplicationContextException("Cannot initialize servlet context", ex);
+   			}
+   		}
+   		initPropertySources();
+   	}
+   ~~~
+   
+   
+   
+3. 
+
+   
+
+
+
+
+
+
+
+
+
+
 
