@@ -135,3 +135,93 @@ spring 源码分析
 
 2. di 依赖注入
 
+#### 2.spring流程概述
+
+1. 加载资源路径
+
+   需要将xml等格式文件加载至内存中。
+
+2. 核心方法-->refresh（）方法
+
+   1. prepareRefresh() 	//准备刷新
+
+      ~~~java
+      this.startupDate = System.currentTimeMillis();//设置开启时间
+      设置活动关闭标记
+      initPropertySources()获取资源属性
+      getEnvironment()。validateRequiredProperties-->获取环境验证资源
+      创建监听器和事件对象
+      ~~~
+
+      
+
+   2. obtainFreshBeanFactory() 获取刷新的bean工厂 创建容器对象 defaultListableBeanFactory,
+
+      同时加载bean信息到工厂，重要是loadBeanDefinitions。
+
+      重要方法有两个
+
+      1. refreshBeanFactory()
+
+         已经存在就摧毁，关闭，重新创建
+
+         ~~~java
+         if (hasBeanFactory()) {
+         			destroyBeans();
+         			closeBeanFactory();
+         		}
+         		try {
+         			DefaultListableBeanFactory beanFactory = createBeanFactory();//创建一个bean工厂
+         			beanFactory.setSerializationId(getId());//设置序列化ID
+         			customizeBeanFactory(beanFactory);自定义bean工厂
+         			loadBeanDefinitions(beanFactory);//加载文件信息（XML、注解等）
+         			this.beanFactory = beanFactory;
+         		}
+         		catch (IOException ex) {
+         			throw new ApplicationContextException("I/O error parsing bean definition source for " + getDisplayName(), ex);
+         		}
+         ~~~
+
+         
+
+      2. getBeanFactory()
+
+      ~~~java
+      //类图
+      bean Factory 根接口
+      hierarchical bean factory 继承关系    listable bean factory  获取所有bean工厂实例的接口
+      default listable bean factory  默认实现
+          
+          
+          
+      ~~~
+
+      
+
+   3. prepareBeanFactory()初始化bean工厂，给bean工厂设置一些默认值，设置忽略的ware。
+
+      ~~~
+      ~~~
+
+      
+
+   4. postProcessBeanFactory() //扩展实现，对beanDefinition实例化前的增强。
+
+   5. invokeBeanFactoryPostProcessor()//执行修改beanDefinition。必须在bean实例化之前调用
+
+      ~~~
+      
+      ~~~
+
+   6. registerBeanPostProcessor(beanFactory)实例化并且注册beanPostProcessor
+
+   7. initMessageSource()初始化国际资源
+
+   8. initApplicationEventMultcaster()初始化事件广播器
+
+   9. onRefresh()//子类坐扩展工作
+
+   10. registerListeners()注册监听器
+
+   11. finishBeanFactoryInitialization()完成非懒加载的对象实例化。
+
