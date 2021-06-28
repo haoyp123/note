@@ -54,7 +54,7 @@ public class SpringbootStudyApplication {
 
       ~~~java
       SpringApplication-->实例化对象
-          getSpringFactoriesInstance-->通过反射机制创建 ApplicationContextInitializer的实例。
+          getSpringFactoriesInstance()-->通过反射机制创建 ApplicationContextInitializer的实例。
       ~~~
 
       
