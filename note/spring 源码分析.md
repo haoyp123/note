@@ -149,43 +149,78 @@ spring 源码分析
       this.startupDate = System.currentTimeMillis();//设置开启时间
       设置活动关闭标记
       initPropertySources()获取资源属性
-      getEnvironment()。validateRequiredProperties-->获取环境验证资源
+          该方法没有具体实现需要子类实现。
+      getEnvironment().validateRequiredProperties-->获取环境验证资源
       创建监听器和事件对象
-      ~~~
-
+      if (this.earlyApplicationListeners == null) {
+          //这块本身spring项目的时候是没有监听器的this.applicationListeners 没有值
+          //springboot对其进行了扩展，有很多监听器。
+      	this.earlyApplicationListeners = new LinkedHashSet<>(this.applicationListeners);
+      }
+      else {
+      	// Reset local application listeners to pre-refresh state.
+      	this.applicationListeners.clear();
+      	this.applicationListeners.addAll(this.earlyApplicationListeners);
+      }
       
-
-   2. obtainFreshBeanFactory() 获取刷新的bean工厂 创建容器对象 defaultListableBeanFactory,
-
+      // Allow for the collection of early ApplicationEvents,
+      // to be published once the multicaster is available...
+      this.earlyApplicationEvents = new LinkedHashSet<>();
+          
+      ~~~
+   
+      
+   
+   2. configurableListableBeanFactory beanFactory= obtainFreshBeanFactory();
+   
+      obtainFreshBeanFactory() 获取刷新的bean工厂 创建容器对象 defaultListableBeanFactory,
+   
       同时加载bean信息到工厂，重要是loadBeanDefinitions。
-
+   
       重要方法有两个
-
+   
       1. refreshBeanFactory()
-
+   
          已经存在就摧毁，关闭，重新创建
-
+   
          ~~~java
          if (hasBeanFactory()) {
          			destroyBeans();
          			closeBeanFactory();
-         		}
-         		try {
+         }
+         try {
          			DefaultListableBeanFactory beanFactory = createBeanFactory();//创建一个bean工厂
          			beanFactory.setSerializationId(getId());//设置序列化ID
          			customizeBeanFactory(beanFactory);自定义bean工厂
          			loadBeanDefinitions(beanFactory);//加载文件信息（XML、注解等）
          			this.beanFactory = beanFactory;
+         }
+         catch (IOException ex) {
+         	throw new ApplicationContextException("I/O error parsing bean definition source for " + getDisplayName(), ex);
+         }
+         
+         createBeanFactory()//创建一个defaultListableBeanFactory
+         
+         1.customizeBeanFactory(beanFactory);
+         	留给子类扩展，解决是否允许重写同名的bean定义信息，是否解决bean之间的循环依赖。
+         protected void customizeBeanFactory(DefaultListableBeanFactory beanFactory) {
+         		if (this.allowBeanDefinitionOverriding != null) {
+         			beanFactory.setAllowBeanDefinitionOverriding(this.allowBeanDefinitionOverriding);
          		}
-         		catch (IOException ex) {
-         			throw new ApplicationContextException("I/O error parsing bean definition source for " + getDisplayName(), ex);
+         		if (this.allowCircularReferences != null) {
+         			beanFactory.setAllowCircularReferences(this.allowCircularReferences);
          		}
+         }
+         2.loadBeanDefinitions(beanFactory)//把配置文件的内容加载成为beanDefinition
+             从String[]数组到String 再解析成Resource[]再解析成resource
+             最后通过documentLoader 读取为document 对象。根据文档信息解析并注册beandefinition. 
+             
          ~~~
 
          
-
+   
       2. getBeanFactory()
-
+   
       ~~~java
       //类图
       bean Factory 根接口
@@ -195,33 +230,33 @@ spring 源码分析
           
           
       ~~~
-
+   
       
-
+   
    3. prepareBeanFactory()初始化bean工厂，给bean工厂设置一些默认值，设置忽略的ware。
-
+   
       ~~~
       ~~~
-
+   
       
-
+   
    4. postProcessBeanFactory() //扩展实现，对beanDefinition实例化前的增强。
-
+   
    5. invokeBeanFactoryPostProcessor()//执行修改beanDefinition。必须在bean实例化之前调用
-
+   
       ~~~
       
       ~~~
-
+   
    6. registerBeanPostProcessor(beanFactory)实例化并且注册beanPostProcessor
-
+   
    7. initMessageSource()初始化国际资源
-
+   
    8. initApplicationEventMultcaster()初始化事件广播器
-
+   
    9. onRefresh()//子类坐扩展工作
-
+   
    10. registerListeners()注册监听器
-
+   
    11. finishBeanFactoryInitialization()完成非懒加载的对象实例化。
 
