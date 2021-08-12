@@ -185,8 +185,8 @@ spring 源码分析
    
          ~~~java
          if (hasBeanFactory()) {
-         			destroyBeans();
-         			closeBeanFactory();
+         	destroyBeans();
+         	closeBeanFactory();
          }
          try {
          			DefaultListableBeanFactory beanFactory = createBeanFactory();//创建一个bean工厂
