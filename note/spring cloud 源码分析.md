@@ -48,6 +48,38 @@
    能力层   各种服务 用户服务 订单服务 应用更新管理  短信验证码等
 
    存储层   
+   
+6. ##### 流程介绍
+
+   用户--》nginx集群--》网关--》api--》技术熔断
+
+7. ##### 服务的拆分
+
+   业务层
+
+   | 模块     | 项目名称      | 描述     |
+   | -------- | ------------- | -------- |
+   | 乘客端   | api-passenger | 乘客端   |
+   | 司机端   | api-driver    | 司机端   |
+   | 司机听单 | api-listener  | 司机听单 |
+
+   能力层
+
+   | api升级      | service-app-update        |
+   | ------------ | ------------------------- |
+   | 订单         | service-order             |
+   | 派单         | service-order-dispatch    |
+   | 乘客用户管理 | service-passenger-user    |
+   | 短信         | service-sms               |
+   | 计价         | service-valuation         |
+   | 验证码       | service-verification-code |
+   |              |                           |
+   |              |                           |
+   |              |                           |
+
+   
+
+8. 
 
 #### 1.eureka--注册中心
 
