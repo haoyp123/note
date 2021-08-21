@@ -73,13 +73,33 @@
    | 短信         | service-sms               |
    | 计价         | service-valuation         |
    | 验证码       | service-verification-code |
-   |              |                           |
+   | 钱包         | service-wallet            |
    |              |                           |
    |              |                           |
 
    
 
-8. 
+8. ##### 技术栈
+
+   boot cloud maven git  mysql  redis mq
+
+   第三方：
+
+   短信：阿里
+
+   语音：
+
+   文件oss
+
+   消息推送 极光
+
+   支付：微信
+
+   航旅纵横：查航班
+
+   发票：百望云
+
+9. 
 
 #### 1.eureka--注册中心
 
