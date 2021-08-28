@@ -101,7 +101,15 @@
 
 9. ##### 接口设计
 
-   
+   协议：http协议  rest风格
+
+   域名：/restapi.yuming.com
+
+   版本：v1
+
+   路径：
+
+   动作：post  put  delete get
 
 10. 
 
