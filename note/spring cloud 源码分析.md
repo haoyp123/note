@@ -111,7 +111,53 @@
 
    动作：post  put  delete get
 
-10. 
+10. ##### 微服务的项目结构
+
+    项目在独立的仓库中
+
+    整体设计
+
+    |--online text three
+
+    ​	|-- 项目a
+
+    ​	|--项目b
+
+    单独服务设计
+
+    |--pom
+
+    |--src
+
+    ​	|--controller
+
+    ​	|--service
+
+    ​		impl
+
+    ​		interface
+
+    ​	|--dao
+
+    ​		entity
+
+    ​		mapper
+
+    ​	|--manager 对service的一些沉淀
+
+    ​	|--constant 放置常量
+
+    ​	|--request
+
+    ​	|--response
+
+11. ##### 异常处理
+
+    dao层：不打日志，catch抛出 
+
+    service层： 打日志 相信信息 时间 参数
+
+    controller层：封装成状态码 返回
 
 #### 1.eureka--注册中心
 
