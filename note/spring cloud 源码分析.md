@@ -161,7 +161,32 @@
 
 #### 1.eureka--注册中心
 
-​	服务间的注册关系。
+1. ##### 	eureka 原理
+
+   
+
+   ~~~
+   @EnableEurekaServer  创建了一个空的bean。 这个bean 作为一个条件，加载eurekaserver的条件。
+   @Configuration(proxyBeanMethods = false)
+   public class EurekaServerMarkerConfiguration {
+   
+   	@Bean
+   	public Marker eurekaServerMarkerBean() {
+   		return new Marker();
+   	}
+   
+   	class Marker {
+   
+   	}
+   
+   }
+   ~~~
+
+   
+
+2. 
+
+   
 
 ​    
 
